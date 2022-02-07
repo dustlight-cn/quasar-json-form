@@ -1,6 +1,6 @@
 {
   "name": "@dustlight/quasar-ui-json-form",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1-alpha-1",
   "author": "Hansin1997 <hansin@dustlight.cn>",
   "description": "JSON Schema based form toolkit for Quasar",
   "license": "MIT",

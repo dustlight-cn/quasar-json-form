@@ -11,7 +11,7 @@ function extendConf (conf) {
   conf.boot.push('~@dustlight/quasar-app-extension-json-form/src/boot/register.js')
 
   // make sure app extension files & ui package gets transpiled
-  conf.build.transpileDependencies.push(/@dustlight/quasar-app-extension-json-form[\\/]src/)
+  conf.build.transpileDependencies.push(/quasar-app-extension-json-form[\\/]src/)
 
   // make sure the stylesheet goes through webpack to avoid SSR issues
   conf.css.push('~@dustlight/quasar-ui-json-form/src/index.sass')
