@@ -1,11 +1,11 @@
 {
   "name": "@dustlight/quasar-ui-json-form",
-  "version": "0.0.1-alpha-1",
+  "version": "0.0.1-alpha-2",
   "author": "Hansin1997 <hansin@dustlight.cn>",
   "description": "JSON Schema based form toolkit for Quasar",
   "license": "MIT",
-  "module": "dist/index.esm.js",
-  "main": "dist/index.common.js",
+  "module": "src/index.esm.js",
+  "main": "src/index.common.js",
   "scripts": {
     "dev": "cd dev && yarn dev && cd ..",
     "dev:umd": "yarn build && node build/script.open-umd.js",
