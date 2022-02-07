@@ -5,16 +5,25 @@
 
 <script>
 import {JSONEditor} from "@json-editor/json-editor/src/core";
-
-import 'spectre.css/dist/spectre.min.css'
-import 'spectre.css/dist/spectre-exp.min.css'
-import 'spectre.css/dist/spectre-icons.min.css'
+import './JsonForm.css'
 
 export default {
   name: "JsonForm",
   components: {},
   props: {
-    schema: Object || {}
+    schema: Object || {},
+    refs: {
+      type: Object,
+      default() {
+        return {
+          record: {
+            "$schema": "http://json-schema.org/draft-06/schema#",
+            "$id": "https://datacenter.dustlight.cn/v1/schemas/record",
+            "type": "string"
+          }
+        }
+      }
+    }
   },
   data() {
     return {
@@ -32,17 +41,11 @@ export default {
       let options = {
         ajax: true,
         schema: schema,
-        theme: 'spectre',
+        theme: 'barebones',
         disable_collapse: true,
         disable_edit_json: true,
         disable_properties: true,
-        refs: {
-          record: {
-            "$schema": "http://json-schema.org/draft-06/schema#",
-            "$id": "https://datacenter.dustlight.cn/v1/schemas/record",
-            "type": "string"
-          }
-        }
+        refs: this.refs
       }
       this.editor = new JSONEditor(this.$refs.editor_holder, options)
     },
@@ -56,7 +59,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
