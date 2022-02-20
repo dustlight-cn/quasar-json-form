@@ -15,11 +15,26 @@
       "title": "价值",
       "description": "客户的价值",
       "type": "number"
+    },
+    "test": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "birth": {
+          "format": "date",
+          "type": "string"
+        },
+        "value": {
+          "title": "价值",
+          "description": "客户的价值",
+          "type": "number"
+        }
+      }
     }
   },
   "required": [
     "name"
-  ],
-  "$schema": "https://datacenter.dustlight.cn/v1/schemas/form",
-  "$id": "https://datacenter.dustlight.cn/v1/schemas/"
+  ]
 }

@@ -38,10 +38,16 @@ class AjvUtil {
     /**
      *
      * @param {string} lang 语言
+     * @param {any} metaSchema Meta Schema
      */
-    constructor(lang) {
+    constructor(lang, metaSchema) {
         this.lang = getLang(lang)
         this.ajv = new Ajv()
+        if (metaSchema) {
+            for (let key in metaSchema) {
+                this.ajv.addMetaSchema(metaSchema[key], key)
+            }
+        }
     }
 
     /**
@@ -61,7 +67,6 @@ class AjvUtil {
      * @returns {string|boolean} 成功返回 true ，失败返回具体原因
      */
     validate(target, name) {
-        console.log(target, name)
         if (this.validation(target))
             return true
         if (AjvI18n[this.lang])

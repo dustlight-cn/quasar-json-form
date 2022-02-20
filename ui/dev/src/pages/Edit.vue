@@ -1,16 +1,12 @@
 <template>
   <q-page padding>
-    <!--    <JsonEditor />-->
-    <component :is="gg"/>
-    <my-json-form :schema="client" :ui-schema="clientUi"/>
+    <my-json-form :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema"/>
   </q-page>
 </template>
 
 <script>
 import client from "../resources/client.json"
 import clientUi from "../resources/client.ui.json"
-import {QBtn} from "quasar";
-import {shallowRef, defineAsyncComponent} from 'vue'
 
 export default {
   name: "Edit",
@@ -18,7 +14,7 @@ export default {
     return {
       client: client,
       clientUi: clientUi,
-      gg: shallowRef(defineAsyncComponent(() => Promise.resolve(QBtn)))
+      metaSchema: {}
     }
   },
   methods: {
@@ -27,21 +23,6 @@ export default {
     }
   },
   mounted() {
-    // let btn = createApp(QBtn)
-    //
-    // console.log(btn)
-    // let p = document.createElement("div")
-    // console.log(this.$refs.container.$el)
-    // this.$refs.container.$el.append(p)
-    // btn.mount(p)
-    //
-    // // let qbtn = new QBtn()
-    // let node = createElementVNode(QBtn,null,null)
-    //
-    // console.log(node)
-    // console.log(this.$refs.container)
-    // this.$refs.container.ad(node)
-    // createVNode()
   }
 }
 

@@ -2,17 +2,18 @@ import AjvUtil from "./AjvUtil"
 import {ref, toRefs, reactive, watch, onMounted, getCurrentInstance} from 'vue'
 
 const props = {
+    metaSchema: Object,
     schema: Object,
     additional: Object,
     name: String,
-    itemVal: Object
+    itemVal: Object,
+    properties: Object,
 }
 
 function setup(props) {
-    let ajv = new AjvUtil(getCurrentInstance().appContext.config.globalProperties.$q.lang.isoName)
-
+    let ajv = new AjvUtil(getCurrentInstance().appContext.config.globalProperties.$q.lang.isoName, props.metaSchema)
     let data = reactive({
-        val: new String(props.itemVal || ""),
+        val: props.itemVal || null,
         rules: [
             v => ajv.validate(v, props.name)
         ],

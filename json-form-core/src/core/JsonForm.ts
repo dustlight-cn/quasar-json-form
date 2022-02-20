@@ -26,9 +26,9 @@ class JsonForm {
                         additional ? additional[key] : undefined)
                 }
             }
-            return obj
+            return handler(name, body, data, additional, obj)
         } else {
-            return (handler(name, body, data, additional))
+            return handler(name, body, data, additional)
         }
     }
 
