@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
-    <JsonForm ref="form" :schema="client"/>
-    <q-btn label="Submit" @click="getValue"/>
+    <JsonForm ref="form" :schema="client" @submit="onSubmit">
+    </JsonForm>
   </q-page>
 </template>
 
@@ -16,8 +16,8 @@ export default {
     }
   },
   methods: {
-    getValue() {
-      alert(JSON.stringify(this.$refs.form.getValue(), undefined, "  "))
+    onSubmit(val) {
+      alert(JSON.stringify(val, undefined, 2))
     }
   }
 }

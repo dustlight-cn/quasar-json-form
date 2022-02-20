@@ -1,0 +1,33 @@
+{
+  "name": "@dustlight/json-form-core",
+  "version": "0.0.1",
+  "description": "Json Form Core",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dustlight-cn/quasar-json-form.git"
+  },
+  "keywords": [
+    "JSON",
+    "Schema",
+    "Form"
+  ],
+  "author": "Hansin1997 <hansin@dustlight.cn>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dustlight-cn/quasar-json-form/issues"
+  },
+  "homepage": "https://github.com/dustlight-cn/quasar-json-form#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.18",
+    "tslint": "^6.1.3",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "core-js": "^3.21.1"
+  }
+}

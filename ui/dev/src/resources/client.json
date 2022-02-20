@@ -11,10 +11,6 @@
       "format": "date",
       "type": "string"
     },
-    "company": {
-      "form": "company",
-      "$ref": "record"
-    },
     "value": {
       "title": "价值",
       "description": "客户的价值",
@@ -22,8 +18,7 @@
     }
   },
   "required": [
-    "name",
-    "company"
+    "name"
   ],
   "$schema": "https://datacenter.dustlight.cn/v1/schemas/form",
   "$id": "https://datacenter.dustlight.cn/v1/schemas/"

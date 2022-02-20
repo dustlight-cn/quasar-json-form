@@ -1,17 +1,40 @@
 <template>
-  <div ref="editor_holder">
+  <div>
+    <VueForm
+        v-model="formData"
+        :schema="schema"
+        :ui-schema="uiSchema"
+        :fallback-label="true"
+        @submit="$emit('submit',formData)"
+        @cancel="$emit('cancel',formData)"
+        :form-footer="{
+          show: true,
+          okBtn: ok || this.$q.lang.label.ok,
+          cancelBtn: ok || this.$q.lang.label.cancel,
+          okBtnProps: {  type: 'primary' , loading: loading},
+          cancelBtnProps: { disabled: loading }
+        }"
+    >
+    </VueForm>
   </div>
 </template>
 
 <script>
-import {JSONEditor} from "@json-editor/json-editor/src/core";
+import VueForm from '@lljj/vue3-form-element';
+
+import 'element-plus/dist/index.css'
 import './JsonForm.css'
 
 export default {
   name: "JsonForm",
-  components: {},
+  components: {VueForm},
+  emits: ['submit', 'cancel'],
   props: {
     schema: Object || {},
+    uiSchema: Object || {},
+    ok: String,
+    cancel: String,
+    loading: Boolean,
     refs: {
       type: Object,
       default() {
@@ -27,35 +50,21 @@ export default {
   },
   data() {
     return {
-      editor: null
+      formData: {},
     }
   },
   watch: {
-    schema() {
-      if (this.schema)
-        this.loadSchema(this.schema)
-    }
   },
   methods: {
-    loadSchema(schema) {
-      let options = {
-        ajax: true,
-        schema: schema,
-        theme: 'barebones',
-        disable_collapse: true,
-        disable_edit_json: true,
-        disable_properties: true,
-        refs: this.refs
-      }
-      this.editor = new JSONEditor(this.$refs.editor_holder, options)
-    },
     getValue() {
-      return this.editor.getValue()
+      return this.formData
+    },
+    setValue(val) {
+      this.formData = val || {}
     }
   },
   mounted() {
-    if (this.schema)
-      this.loadSchema(this.schema)
+
   }
 }
 </script>
