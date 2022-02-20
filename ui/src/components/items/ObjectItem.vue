@@ -3,15 +3,15 @@
     <div class="text-subtitle1">{{ title }}</div>
     <div class="text-subtitle2">{{ subtitle }}</div>
     <div v-if="hasProperties && components">
-      <div v-for="(property,name) in properties">
-        <component
-            :is="components[name]"
-            :name="name"
-            :schema="properties[name].schema"
-            :properties="properties[name].properties"
-            :additional="properties[name].additional"
-        />
-      </div>
+      <component
+          v-for="(property,name) in properties"
+          :ref="name"
+          :is="components[name]"
+          :name="name"
+          :schema="properties[name].schema"
+          :properties="properties[name].properties"
+          :additional="properties[name].additional"
+      />
     </div>
   </div>
 </template>
@@ -61,6 +61,13 @@ export default {
       for (let name in this.properties) {
         this.components[name] = shallowRef(defineAsyncComponent(this.properties[name].component))
       }
+    },
+    getValue() {
+      let v = {}
+      for (let key in this.$refs) {
+        v[key] = this.$refs[key][0].getValue()
+      }
+      return v
     }
   },
   mounted() {

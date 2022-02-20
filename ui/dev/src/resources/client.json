@@ -16,20 +16,24 @@
       "description": "客户的价值",
       "type": "number"
     },
-    "test": {
+    "addition": {
       "type": "object",
+      "title": "额外信息",
+      "description": "额外的信息",
       "properties": {
-        "name": {
-          "type": "string"
+        "check": {
+          "title": "是否 VIP",
+          "description": "该客户是否 VIP",
+          "type": "boolean"
         },
-        "birth": {
-          "format": "date",
-          "type": "string"
-        },
-        "value": {
-          "title": "价值",
-          "description": "客户的价值",
-          "type": "number"
+        "location": {
+          "title": "地区",
+          "description": "客户所属地区",
+          "enum": [
+            "中国大陆",
+            "中国香港",
+            "美国"
+          ]
         }
       }
     }

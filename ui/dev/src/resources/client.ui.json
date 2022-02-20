@@ -1,5 +1,10 @@
 {
   "name": {
     "gg": "!23"
+  },
+  "addition": {
+    "check": {
+      "widget": "toggle"
+    }
   }
 }

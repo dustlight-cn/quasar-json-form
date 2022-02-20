@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <!--    <div v-for="(c,key) in instances" :key="key">-->
-    <!--      <component :is="c" :name="key" :schema="schemas[key]" :additional="additional[key]" :itemVal="data[key]"/>-->
-    <!--    </div>-->
-    <ObjectItem v-if="component_" :name="null" :meta-schema="metaSchema" :schema="schema_" :additional="additional_"
-                :item-val="data_" :properties="properties_"/>
-  </div>
+  <ObjectItem ref="root" v-if="component_"
+              :name="name || ''"
+              :meta-schema="metaSchema"
+              :schema="schema_"
+              :additional="additional_"
+              :item-val="data_" :properties="properties_"/>
 </template>
 
 <script>
@@ -19,6 +18,7 @@ export default {
   name: "MyJsonForm",
   components: {ObjectItem},
   props: {
+    name: Object,
     schema: Object,
     uiSchema: Object,
     formData: Object,
@@ -33,6 +33,11 @@ export default {
       data_: null
     }
   },
+  methods:{
+    getValue(){
+      return this.$refs.root.getValue()
+    }
+  },
   mounted() {
     JsonForm.from(this.schema, this.formData, this.uiSchema)
         .then(jf => {
@@ -40,7 +45,10 @@ export default {
             // console.log(name, body, data, additional)
             let c = items[body['type']]
             if (!c) {
-              c = items[""]
+              if (body['enum'])
+                c = items["_enum"]
+              else
+                c = items[""]
               if (!c)
                 return null
             }

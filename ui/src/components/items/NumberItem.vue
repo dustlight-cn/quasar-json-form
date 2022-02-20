@@ -22,6 +22,11 @@ export default {
     hint() {
       return this.schema ? this.schema.description : ""
     }
+  },
+  methods: {
+    getValue() {
+      return this.val
+    }
   }
 }
 </script>
