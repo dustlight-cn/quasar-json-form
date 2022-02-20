@@ -1,28 +1,19 @@
 <template>
   <div>
-    <q-input v-model="value" filled :label="label" :hint="hint"/>
-    <div>
-      {{ JSON.stringify(schema) }}
-    </div>
-    <div>
-      {{ JSON.stringify(additional) }}
-    </div>
-    <div>
-      {{ JSON.stringify(itemVal) }}
-    </div>
+    <q-input v-model="val" :rules="rules" filled :label="label" :hint="hint"/>
   </div>
 </template>
 
 <script>
-import AjvUtil from "./AjvUtil"
+import {props, setup} from "./common"
 
 export default {
   name: "StringItem",
+  setup(props, ...args) {
+    return setup(props, ...args)
+  },
   props: {
-    schema: Object,
-    additional: Object,
-    name: String,
-    itemVal: Object
+    ...props
   },
   computed: {
     label() {
@@ -30,11 +21,6 @@ export default {
     },
     hint() {
       return this.schema ? this.schema.description : ""
-    }
-  },
-  data() {
-    return {
-      value: ""
     }
   }
 }

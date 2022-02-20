@@ -10,16 +10,15 @@ const props = {
 
 function setup(props) {
     let ajv = new AjvUtil(getCurrentInstance().appContext.config.globalProperties.$q.lang.isoName)
-    let {schema, name} = toRefs(props)
 
     let data = reactive({
         val: new String(props.itemVal || ""),
         rules: [
-            v => ajv.validate(v, name)
+            v => ajv.validate(v, props.name)
         ],
         ajv: ajv
     })
-    let w = watch(() => schema, (val) => ajv.setSchema(val))
+    let w = watch(() => props.schema, (val) => ajv.setSchema(val))
 
     onMounted(() => {
         ajv.setSchema(props.schema)
