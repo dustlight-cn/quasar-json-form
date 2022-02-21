@@ -1,12 +1,13 @@
 <template>
   <div>
     <slot name="header"/>
-    <ObjectItem ref="root" v-if="component_"
-                :name="name || ''"
-                :meta-schema="metaSchema"
-                :schema="schema_"
-                :additional="additional_"
-                :item-val="data_" :properties="properties_"/>
+    <component ref="root" v-if="component_"
+               :is="component_"
+               :name="name || ''"
+               :meta-schema="metaSchema"
+               :schema="schema_"
+               :additional="additional_"
+               :item-val="data_" :properties="properties_"/>
     <slot/>
     <slot name="footer"/>
   </div>
@@ -15,11 +16,11 @@
 <script>
 import {JsonForm as JsonFormCore } from "@dustlight/json-form-core";
 import items from './items'
-import ObjectItem from "./items/ObjectItem";
+import {shallowRef, defineAsyncComponent} from 'vue'
 
 export default {
   name: "JsonForm",
-  components: {ObjectItem},
+  components: {},
   props: {
     name: Object,
     schema: Object,
@@ -65,7 +66,7 @@ export default {
               properties: obj
             }
           })
-          this.component_ = component
+          this.component_ = shallowRef(defineAsyncComponent(component))
           this.schema_ = schema
           this.data_ = data
           this.additional_ = additional
