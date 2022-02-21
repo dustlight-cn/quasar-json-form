@@ -9,7 +9,7 @@
         <q-item-section>
           <component
               :is="component[key]"
-              :ref="name"
+              ref="component"
               :name="this.name + ' ' + (index + 1)"
               :schema="properties.schema"
               :properties="properties.properties"
@@ -84,8 +84,10 @@ export default {
     },
     getValue() {
       let v = []
-      for (let key in this.$refs) {
-        v.push(this.$refs[key][0].getValue())
+      if(!this.$refs.component)
+        return v
+      for (let i in this.$refs.component) {
+        v.push(this.$refs.component[i].getValue())
       }
       return v
     }
