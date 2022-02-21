@@ -34,6 +34,14 @@
             "中国香港",
             "美国"
           ]
+        },
+        "contact": {
+          "title": "联系方式",
+          "description": "客户的联系方式",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }

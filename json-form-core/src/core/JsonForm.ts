@@ -27,6 +27,10 @@ class JsonForm {
                 }
             }
             return handler(name, body, data, additional, obj)
+        } else if (type == 'array') {
+            let items = body['items']
+            let obj = this.handle(name, items, handler, data, additional)
+            return handler(name, body, data, additional, obj)
         } else {
             return handler(name, body, data, additional)
         }
