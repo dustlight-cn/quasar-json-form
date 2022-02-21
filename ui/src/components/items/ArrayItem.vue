@@ -16,12 +16,12 @@
               :additional="properties.additional"
           />
         </q-item-section>
-        <q-item-section side top>
+        <q-item-section v-if="!minItems || (children.length > minItems)" side top>
           <q-btn round flat icon="remove" color="primary" @click="()=>removeChild(key)"/>
         </q-item-section>
       </q-item>
 
-      <div class="text-center">
+      <div class="text-center" v-if="!maxItems || (children.length < maxItems)">
         <q-btn round flat icon="add" color="primary" @click="addChild"/>
       </div>
     </q-list>
@@ -67,6 +67,12 @@ export default {
       for (let i in this.properties)
         return true
       return false
+    },
+    minItems() {
+      return this.schema ? this.schema.minItems : null
+    },
+    maxItems() {
+      return this.schema ? this.schema.maxItems : null
     }
   },
   methods: {
@@ -93,7 +99,10 @@ export default {
     }
   },
   mounted() {
-
+    if (this.minItems) {
+      for (let i = 0; i < this.minItems; i++)
+        this.addChild()
+    }
   }
 }
 </script>
