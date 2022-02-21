@@ -2,6 +2,7 @@
   <div>
     <div class="text-subtitle1">{{ title }}</div>
     <div class="text-subtitle2">{{ subtitle }}</div>
+    <div class="text-negative text-caption">{{ errorMessage }}</div>
     <div v-if="hasProperties && components">
       <component
           v-for="(property,name) in properties"
@@ -30,7 +31,8 @@ export default {
   },
   data() {
     return {
-      components: null
+      components: null,
+      errorMessage: ""
     }
   },
   watch: {
@@ -68,6 +70,24 @@ export default {
         v[key] = this.$refs[key][0].getValue()
       }
       return v
+    },
+    validate() {
+      for (let key in this.$refs) {
+        let r = this.$refs[key][0].validate()
+        if (r != true)
+          return false
+      }
+
+      this.errorMessage = ""
+      let val = this.getValue();
+      for (let i in this.rules) {
+        let result = this.rules[i](val)
+        if (result != true) {
+          this.errorMessage = result
+          return false
+        }
+      }
+      return true
     }
   },
   mounted() {

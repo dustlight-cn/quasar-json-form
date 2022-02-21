@@ -31,7 +31,7 @@
           Value
         </q-item-label>
         <q-item-label>
-          <q-input :rules="rules" v-model="val" type="textarea" outlined/>
+          <q-input ref="input" :rules="rules" v-model="val" type="textarea" outlined/>
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -48,6 +48,14 @@ export default {
   },
   setup(props, ...args) {
     return setup(props, ...args)
+  },
+  methods: {
+    getValue() {
+      return this.val
+    },
+    validate() {
+      return this.$refs.input.validate(this.val)
+    }
   }
 }
 </script>

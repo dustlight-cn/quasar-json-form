@@ -6,6 +6,9 @@
         <q-item-label caption>
           {{ hint }}
         </q-item-label>
+        <q-item-label>
+          <div v-if="errorMessage" class="text-negative text-caption">{{ errorMessage }}</div>
+        </q-item-label>
       </q-item-section>
       <q-item-section avatar side>
         <q-toggle v-model="val"/>
@@ -16,6 +19,9 @@
         <q-item-label>{{ label }}</q-item-label>
         <q-item-label caption>
           {{ hint }}
+        </q-item-label>
+        <q-item-label>
+          <div v-if="errorMessage" class="text-negative">{{ errorMessage }}</div>
         </q-item-label>
       </q-item-section>
       <q-item-section avatar side>
@@ -47,9 +53,30 @@ export default {
       return this.additional ? this.additional.widget : "";
     }
   },
+  data() {
+    return {
+      errorMessage: ""
+    }
+  },
+  watch: {
+    val() {
+      this.validate()
+    }
+  },
   methods: {
     getValue() {
       return this.val
+    },
+    validate() {
+      this.errorMessage = ""
+      for (let i in this.rules) {
+        let result = this.rules[i](this.val)
+        if (result != true) {
+          this.errorMessage = result
+          return false
+        }
+      }
+      return true
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-input v-model="val" :rules="rules" filled :label="label" :hint="hint" :type="inputType"/>
+    <q-input ref="input"  v-model="val" :rules="rules" filled :label="label" :hint="hint" :type="inputType"/>
   </div>
 </template>
 
@@ -36,6 +36,9 @@ export default {
   methods: {
     getValue() {
       return this.val
+    },
+    validate(){
+      return this.$refs.input.validate(this.val)
     }
   }
 }

@@ -1,17 +1,20 @@
 <template>
-  <ObjectItem ref="root" v-if="component_"
-              :name="name || ''"
-              :meta-schema="metaSchema"
-              :schema="schema_"
-              :additional="additional_"
-              :item-val="data_" :properties="properties_"/>
+  <div>
+    <slot name="header"/>
+    <ObjectItem ref="root" v-if="component_"
+                :name="name || ''"
+                :meta-schema="metaSchema"
+                :schema="schema_"
+                :additional="additional_"
+                :item-val="data_" :properties="properties_"/>
+    <slot/>
+    <slot name="footer"/>
+  </div>
 </template>
 
 <script>
 import {JsonForm} from "@dustlight/json-form-core";
 import items from './items'
-
-import {shallowRef, defineAsyncComponent} from 'vue'
 import ObjectItem from "./items/ObjectItem";
 
 export default {
@@ -33,9 +36,12 @@ export default {
       data_: null
     }
   },
-  methods:{
-    getValue(){
+  methods: {
+    getValue() {
       return this.$refs.root.getValue()
+    },
+    validate() {
+      return this.$refs.root.validate()
     }
   },
   mounted() {

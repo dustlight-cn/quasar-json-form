@@ -24,7 +24,8 @@
         "check": {
           "title": "是否 VIP",
           "description": "该客户是否 VIP",
-          "type": "boolean"
+          "type": "boolean",
+          "const": true
         },
         "location": {
           "title": "地区",

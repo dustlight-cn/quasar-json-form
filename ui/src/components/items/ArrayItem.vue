@@ -2,6 +2,7 @@
   <div>
     <div class="text-subtitle1">{{ title }}</div>
     <div class="text-subtitle2">{{ subtitle }}</div>
+    <div class="text-negative text-caption">{{ errorMessage }}</div>
     <q-list separator>
       <q-item
           v-for="(key,index) in children"
@@ -45,7 +46,8 @@ export default {
       children: [],
       component: {},
       length: 0,
-      increment: 0
+      increment: 0,
+      errorMessage: ""
     }
   },
   watch: {
@@ -90,12 +92,31 @@ export default {
     },
     getValue() {
       let v = []
-      if(!this.$refs.component)
+      if (!this.$refs.component)
         return v
       for (let i in this.$refs.component) {
         v.push(this.$refs.component[i].getValue())
       }
       return v
+    },
+    validate() {
+      if (!this.$refs.component)
+        return true
+      for (let i in this.$refs.component) {
+        let r = this.$refs.component[i].validate()
+        if (r != true)
+          return false
+      }
+      this.errorMessage = ""
+      let val = this.getValue();
+      for (let i in this.rules) {
+        let result = this.rules[i](val)
+        if (result != true) {
+          this.errorMessage = result
+          return false
+        }
+      }
+      return true
     }
   },
   mounted() {

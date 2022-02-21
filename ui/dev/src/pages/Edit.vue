@@ -1,7 +1,11 @@
 <template>
   <q-page padding>
-    <my-json-form ref="jf" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema"/>
-    <q-btn label="Value" color="primary" @click="getValue"/>
+    <q-form @submit="test">
+      <my-json-form ref="jf" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema">
+
+        <q-btn type="submit" label="Value" color="primary"/>
+      </my-json-form>
+    </q-form>
   </q-page>
 </template>
 
@@ -19,11 +23,21 @@ export default {
     }
   },
   methods: {
+    test(...args) {
+      console.log(...args)
+    },
     getValue() {
+      let result = this.validate()
+      console.log(result)
+      if (!result)
+        return
       console.log(this.$refs.jf)
       let obj = this.$refs.jf.getValue()
       console.log(obj)
       alert(JSON.stringify(obj, undefined, 2))
+    },
+    validate() {
+      return this.$refs.jf.validate()
     }
   },
   mounted() {
