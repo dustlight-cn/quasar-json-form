@@ -1,14 +1,17 @@
 <template>
   <div>
-    <q-input ref="input"  v-model="val" :rules="rules" filled :label="label" :hint="hint" :type="inputType"/>
+    <date-time v-if="isDateOrTime" ref="input"  v-model="val" :rules="rules" :label="label" :hint="hint" :type="format"/>
+    <q-input else ref="input" v-model="val" :rules="rules" filled :label="label" :hint="hint" :type="inputType"/>
   </div>
 </template>
 
 <script>
 import {props, setup} from "./common"
+import DateTime from "./DateTime";
 
 export default {
   name: "StringItem",
+  components: {DateTime},
   setup(props, ...args) {
     return setup(props, ...args)
   },
@@ -22,11 +25,14 @@ export default {
     hint() {
       return this.schema ? this.schema.description : ""
     },
-    format(){
+    format() {
       return this.schema ? this.schema.format : ""
     },
-    inputType(){
-      switch (this.format){
+    isDateOrTime() {
+      return this.format == 'date' || this.format == 'time' || this.format == 'datetime'
+    },
+    inputType() {
+      switch (this.format) {
 
         default:
           return this.format
