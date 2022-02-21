@@ -42,7 +42,6 @@ export default {
     JsonForm.from(this.schema, this.formData, this.uiSchema)
         .then(jf => {
           let {component, schema, data, additional, properties} = jf.render((name, body, data, additional, obj) => {
-            // console.log(name, body, data, additional)
             let c = items[body['type']]
             if (!c) {
               if (body['enum'])
