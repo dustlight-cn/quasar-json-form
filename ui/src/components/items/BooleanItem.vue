@@ -7,7 +7,13 @@
           {{ hint }}
         </q-item-label>
         <q-item-label>
-          <div v-if="errorMessage" class="text-negative text-caption">{{ errorMessage }}</div>
+          <transition
+              appear
+              v-if="errorMessage"
+              enter-active-class="animated fadeInUp"
+          >
+            <div class="text-negative text-caption">{{ errorMessage }}</div>
+          </transition>
         </q-item-label>
       </q-item-section>
       <q-item-section avatar side>
@@ -21,7 +27,13 @@
           {{ hint }}
         </q-item-label>
         <q-item-label>
-          <div v-if="errorMessage" class="text-negative">{{ errorMessage }}</div>
+          <transition
+              appear
+              v-if="errorMessage"
+              enter-active-class="animated fadeInUp"
+          >
+            <div class="text-negative">{{ errorMessage }}</div>
+          </transition>
         </q-item-label>
       </q-item-section>
       <q-item-section avatar side>
@@ -33,11 +45,23 @@
 
 <script>
 import {props, setup} from "./common"
+import {inject, onBeforeUnmount, getCurrentInstance} from 'vue'
+
 
 export default {
   name: "NumberItem",
   setup(props, ...args) {
-    return setup(props, ...args)
+    let INJECT = inject("_q_fo_", false)
+    let {proxy} = getCurrentInstance()
+    onBeforeUnmount(() => INJECT.unbindComponent(proxy))
+    if (INJECT != null) {
+      INJECT.bindComponent(proxy)
+    }
+    let c = setup(props, ...args)
+    return {
+      ...c,
+      INJECT
+    }
   },
   props: {
     ...props
@@ -78,6 +102,9 @@ export default {
       }
       return true
     }
+  },
+  resetValidation() {
+    this.errorMessage = ""
   }
 }
 </script>
