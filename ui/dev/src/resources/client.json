@@ -8,7 +8,7 @@
       "type": "string"
     },
     "birth": {
-      "format": "date",
+      "format": "date-time",
       "type": "string"
     },
     "value": {

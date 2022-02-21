@@ -1,7 +1,21 @@
 <template>
   <div>
-    <date-time v-if="isDateOrTime" ref="input"  v-model="val" :rules="rules" :label="label" :hint="hint" :type="format"/>
-    <q-input else ref="input" v-model="val" :rules="rules" filled :label="label" :hint="hint" :type="inputType"/>
+    <date-time v-if="isDateOrTime"
+               filled
+               ref="input"
+               v-model="val"
+               :rules="rules"
+               :label="label"
+               :hint="hint"
+               :type="format"/>
+    <q-input v-else
+             filled
+             ref="input"
+             v-model="val"
+             :rules="rules"
+             :label="label"
+             :hint="hint"
+             :type="inputType"/>
   </div>
 </template>
 
@@ -29,7 +43,7 @@ export default {
       return this.schema ? this.schema.format : ""
     },
     isDateOrTime() {
-      return this.format == 'date' || this.format == 'time' || this.format == 'datetime'
+      return this.format == 'date' || this.format == 'time' || this.format == 'date-time'
     },
     inputType() {
       switch (this.format) {

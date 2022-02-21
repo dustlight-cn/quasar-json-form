@@ -25,6 +25,7 @@ export default {
   methods: {
     test(...args) {
       console.log(...args)
+      this.getValue()
     },
     getValue() {
       let result = this.validate()
