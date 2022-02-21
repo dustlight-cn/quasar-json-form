@@ -1,70 +1,80 @@
 <template>
   <div>
-    <VueForm
-        v-model="formData"
-        :schema="schema"
-        :ui-schema="uiSchema"
-        :fallback-label="true"
-        @submit="$emit('submit',formData)"
-        @cancel="$emit('cancel',formData)"
-        :form-footer="{
-          show: true,
-          okBtn: ok || this.$q.lang.label.ok,
-          cancelBtn: ok || this.$q.lang.label.cancel,
-          okBtnProps: {  type: 'primary' , loading: loading},
-          cancelBtnProps: { disabled: loading }
-        }"
-    >
-    </VueForm>
+    <slot name="header"/>
+    <ObjectItem ref="root" v-if="component_"
+                :name="name || ''"
+                :meta-schema="metaSchema"
+                :schema="schema_"
+                :additional="additional_"
+                :item-val="data_" :properties="properties_"/>
+    <slot/>
+    <slot name="footer"/>
   </div>
 </template>
 
 <script>
-import VueForm from '@lljj/vue3-form-element';
-
-import 'element-plus/dist/index.css'
-import './JsonForm.css'
+import {JsonForm as JsonFormCore } from "@dustlight/json-form-core";
+import items from './items'
+import ObjectItem from "./items/ObjectItem";
 
 export default {
   name: "JsonForm",
-  components: {VueForm},
-  emits: ['submit', 'cancel'],
+  components: {ObjectItem},
   props: {
-    schema: Object || {},
-    uiSchema: Object || {},
-    ok: String,
-    cancel: String,
-    loading: Boolean,
-    refs: {
-      type: Object,
-      default() {
-        return {
-          record: {
-            "$schema": "http://json-schema.org/draft-06/schema#",
-            "$id": "https://datacenter.dustlight.cn/v1/schemas/record",
-            "type": "string"
-          }
-        }
-      }
-    }
+    name: Object,
+    schema: Object,
+    uiSchema: Object,
+    formData: Object,
+    metaSchema: Object
   },
   data() {
     return {
-      formData: {},
+      component_: null,
+      properties_: null,
+      schema_: null,
+      additional_: null,
+      data_: null
     }
-  },
-  watch: {
   },
   methods: {
     getValue() {
-      return this.formData
+      return this.$refs.root.getValue()
     },
-    setValue(val) {
-      this.formData = val || {}
+    validate() {
+      return this.$refs.root.validate()
     }
   },
   mounted() {
-
+    JsonFormCore.from(this.schema, this.formData, this.uiSchema)
+        .then(jf => {
+          let {component, schema, data, additional, properties} = jf.render((name, body, data, additional, obj) => {
+            let c = items[body['type']]
+            if (!c) {
+              if (body['enum'])
+                c = items["_enum"]
+              else
+                c = items[""]
+              if (!c)
+                return null
+            }
+            return {
+              component: c instanceof Function ? c : () => Promise.resolve(c),
+              schema: body,
+              data: data,
+              additional: additional,
+              properties: obj
+            }
+          })
+          this.component_ = component
+          this.schema_ = schema
+          this.data_ = data
+          this.additional_ = additional
+          this.properties_ = properties
+        })
   }
 }
 </script>
+
+<style scoped>
+
+</style>

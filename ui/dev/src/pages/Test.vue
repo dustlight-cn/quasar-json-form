@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
-    <JsonForm ref="form" :schema="client" @submit="onSubmit">
-    </JsonForm>
+    <json-form ref="form" :schema="client" @submit="onSubmit">
+    </json-form>
   </q-page>
 </template>
 

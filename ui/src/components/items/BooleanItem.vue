@@ -53,8 +53,9 @@ export default {
   setup(props, ...args) {
     let INJECT = inject("_q_fo_", false)
     let {proxy} = getCurrentInstance()
-    onBeforeUnmount(() => INJECT.unbindComponent(proxy))
-    if (INJECT != null) {
+
+    if (INJECT) {
+      onBeforeUnmount(() => INJECT.unbindComponent(proxy))
       INJECT.bindComponent(proxy)
     }
     let c = setup(props, ...args)

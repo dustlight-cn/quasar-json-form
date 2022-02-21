@@ -1,10 +1,10 @@
 <template>
   <q-page padding>
     <q-form @submit="test">
-      <my-json-form ref="jf" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema">
+      <json-form ref="jf" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema">
 
         <q-btn type="submit" label="Value" color="primary"/>
-      </my-json-form>
+      </json-form>
     </q-form>
   </q-page>
 </template>
