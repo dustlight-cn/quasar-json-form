@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="text-subtitle1">{{ title }}</div>
-    <div class="text-subtitle2">{{ subtitle }}</div>
+    <div class="text-h6">{{ title }}</div>
+    <div class="text-grey text-caption">{{ subtitle }}</div>
     <div class="text-negative text-caption">{{ errorMessage }}</div>
     <q-list separator>
       <q-item
+          class="q-pl-xs"
           v-for="(key,index) in children"
           :key="key">
         <q-item-section>

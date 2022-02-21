@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-item v-if="widget == 'toggle'" tag="label" v-ripple>
+    <q-item class="q-pl-xs" v-if="widget == 'toggle'" tag="label" v-ripple>
       <q-item-section>
         <q-item-label>{{ label }}</q-item-label>
         <q-item-label caption>
@@ -20,7 +20,7 @@
         <q-toggle v-model="val"/>
       </q-item-section>
     </q-item>
-    <q-item v-else tag="label" v-ripple>
+    <q-item class="q-pl-xs" v-else tag="label" v-ripple>
       <q-item-section>
         <q-item-label>{{ label }}</q-item-label>
         <q-item-label caption>

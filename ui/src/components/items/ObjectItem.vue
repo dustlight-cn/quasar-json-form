@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="text-subtitle1">{{ title }}</div>
-    <div class="text-subtitle2">{{ subtitle }}</div>
+    <div class="text-h6">{{ title }}</div>
+    <div class="text-grey text-caption">{{ subtitle }}</div>
     <div class="text-negative text-caption">{{ errorMessage }}</div>
-    <div v-if="hasProperties && components">
+    <div v-if="hasProperties && components" class="q-gutter-sm">
       <component
           v-for="(property,name) in properties"
           :ref="name"
