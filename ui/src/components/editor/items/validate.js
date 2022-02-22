@@ -9,7 +9,10 @@ class Validate {
     ]
 
     gteZero = [
-        val => !val || val && val >= 0 || this.i18n.get("rule.gteZero")
+        val => (val == null) || val >= 0 || this.i18n.get("rule.gteZero")
+    ]
+    gtZero = [
+        val => (val == null) || val > 0 || this.i18n.get("rule.gtZero")
     ]
 
     jsonRule = val => {

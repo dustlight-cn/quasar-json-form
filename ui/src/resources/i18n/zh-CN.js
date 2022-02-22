@@ -31,9 +31,17 @@ export default {
             "uri-reference": "URI 引用"
         }
     },
+    number: {
+        multipleOf: "倍数",
+        minimum: "最小值",
+        maximum: "最大值",
+        exclusiveMinimum: "不含边界最小值",
+        exclusiveMaximum: "不含边界最大值"
+    },
     rule: {
         notEmpty: "不可为空！",
         gteZero: "必须大于或等于零！",
+        gtZero: "必须大于零！",
         gteMin: "必须大于或等于最小长度！"
     }
 }
