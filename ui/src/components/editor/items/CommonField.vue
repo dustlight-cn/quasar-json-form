@@ -59,6 +59,10 @@ export default {
     },
     schemaConst() {
       try {
+        if (this.schemaConst == "") {
+          delete this.modelValue.schema.const
+          return
+        }
         let obj = JSON.parse(this.schemaConst)
         this.modelValue.schema.const = obj
       } catch (e) {

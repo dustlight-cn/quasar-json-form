@@ -17,7 +17,7 @@ class Validate {
 
     jsonRule = val => {
         try {
-            if (val == undefined)
+            if (val == undefined || val == "")
                 return true
             JSON.parse(val)
             return true
