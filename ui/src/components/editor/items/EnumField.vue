@@ -12,9 +12,12 @@
           </div>
         </template>
         <template v-slot:after>
-          <q-btn round dense flat icon="remove"/>
+          <q-btn round dense flat icon="remove" @click="()=>removeOption(index)"/>
         </template>
       </q-input>
+      <div class="text-center">
+        <q-btn round dense flat icon="add" @click="addOption"/>
+      </div>
     </q-list>
   </div>
 </template>
@@ -44,18 +47,29 @@ export default {
     }
   },
   watch: {
-    options() {
-      try {
-        console.log("???")
-        let arr = []
-        for (let i in this.options) {
-          arr.push(JSON.parse(this.options[i]))
-        }
-        this.modelValue.schema.enum = arr
-        console.log(arr)
-      } catch (e) {
+    options: {
+      handler() {
+        try {
+          let arr = []
+          for (let i in this.options) {
+            arr.push(JSON.parse(this.options[i]))
+          }
+          this.modelValue.schema.enum = arr
+        } catch (e) {
 
-      }
+        }
+      },
+      deep: true
+    }
+  },
+  methods: {
+    addOption() {
+      this.options.push("\"\"")
+    },
+    removeOption(index) {
+      if (index < 0 || index >= this.options.length)
+        return
+      this.options.splice(index, 1)
     }
   }
 }
