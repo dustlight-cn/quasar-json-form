@@ -38,6 +38,9 @@ export default {
         exclusiveMinimum: "不含边界最小值",
         exclusiveMaximum: "不含边界最大值"
     },
+    enum: {
+        options: "选项"
+    },
     rule: {
         notEmpty: "不可为空！",
         gteZero: "必须大于或等于零！",

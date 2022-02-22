@@ -6,15 +6,15 @@ const components = {
     "boolean": () => import('./BooleanField'),
     // "object": () => import('./ObjectItem'),
     // "array": () => import('./ArrayItem'),
-    // "_enum": () => import('./EnumItem')
+    "_enum": () => import('./EnumField')
 }
 
 function getComponent(schema) {
     if(schema){
         if(schema.type && components[schema.type])
             return components[schema.type]
-        // if(schema.enum)
-            // return components[]
+        if(schema.enum)
+            return components._enum
     }
     return components[""]
 }
