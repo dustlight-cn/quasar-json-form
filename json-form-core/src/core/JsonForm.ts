@@ -10,6 +10,29 @@ class JsonForm {
         this.additional = additional
     }
 
+    public tree(name) {
+        return this.listTree(this.schema, name)
+    }
+
+    protected listTree(schema, name) {
+        if (schema.type == "object") {
+            let children = []
+            for (let key in schema.properties) {
+                children.push(this.listTree(schema.properties[key], key))
+            }
+            return {
+                name: name,
+                schema: schema,
+                children: children
+            }
+        } else {
+            return {
+                name: name,
+                schema: schema
+            }
+        }
+    }
+
     public render(handler: Function): any {
         return this.handle(null, this.schema, handler, this.data, this.additional)
     }

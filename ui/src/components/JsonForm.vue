@@ -26,7 +26,8 @@ export default {
     schema: Object,
     uiSchema: Object,
     formData: Object,
-    metaSchema: Object
+    metaSchema: Object,
+    editable: Boolean
   },
   data() {
     return {
@@ -34,7 +35,12 @@ export default {
       properties_: null,
       schema_: null,
       additional_: null,
-      data_: null
+      data_: null,
+      /**
+       * @type JsonFormCore
+       */
+      jf: null,
+      jfPromise: null
     }
   },
   methods: {
@@ -43,35 +49,61 @@ export default {
     },
     validate() {
       return this.$refs.root.validate()
+    },
+    getTree(name) {
+      return this.getJf().then(jf => jf.tree(name))
+    },
+    /**
+     *
+     * @returns {Promise<JsonForm>}
+     */
+    getJf() {
+      if (this.jf == null) {
+        if (this.jfPromise == null)
+          return this.jfPromise = JsonFormCore.from(this.schema, this.formData, this.uiSchema)
+              .then(jf => {
+                this.jf = jf
+                let {
+                  component,
+                  schema,
+                  data,
+                  additional,
+                  properties
+                } = jf.render((name, body, data, additional, obj) => {
+                  let c = items[body['type']]
+                  if (!c) {
+                    if (body['enum'])
+                      c = items["_enum"]
+                    else
+                      c = items[""]
+                    if (!c)
+                      return null
+                  }
+                  let result = {
+                    component: c instanceof Function ? c : () => Promise.resolve(c),
+                    schema: body,
+                    data: data,
+                    additional: additional,
+                    properties: obj,
+                    name: name
+                  }
+                  return result
+                })
+                this.component_ = shallowRef(defineAsyncComponent(component))
+                this.schema_ = schema
+                this.data_ = data
+                this.additional_ = additional
+                this.properties_ = properties
+                return jf
+              })
+        return this.jfPromise
+      } else {
+        return Promise.resolve(this.jf)
+      }
     }
   },
   mounted() {
-    JsonFormCore.from(this.schema, this.formData, this.uiSchema)
-        .then(jf => {
-          let {component, schema, data, additional, properties} = jf.render((name, body, data, additional, obj) => {
-            let c = items[body['type']]
-            if (!c) {
-              if (body['enum'])
-                c = items["_enum"]
-              else
-                c = items[""]
-              if (!c)
-                return null
-            }
-            return {
-              component: c instanceof Function ? c : () => Promise.resolve(c),
-              schema: body,
-              data: data,
-              additional: additional,
-              properties: obj
-            }
-          })
-          this.component_ = shallowRef(defineAsyncComponent(component))
-          this.schema_ = schema
-          this.data_ = data
-          this.additional_ = additional
-          this.properties_ = properties
-        })
+    this.getJf()
   }
 }
 </script>

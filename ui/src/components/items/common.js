@@ -1,6 +1,6 @@
 import AjvUtil from "./AjvUtil"
-import {ref, toRefs, reactive, watch, onMounted, getCurrentInstance} from 'vue'
-import {fasLeaf} from "@quasar/extras/fontawesome-v5";
+import {toRefs, reactive, watch, onMounted, getCurrentInstance} from 'vue'
+
 
 const props = {
     metaSchema: Object,
@@ -8,7 +8,7 @@ const props = {
     additional: Object,
     name: String,
     itemVal: Object,
-    properties: Object,
+    properties: Object
 }
 
 function getDefaultValue(schema) {

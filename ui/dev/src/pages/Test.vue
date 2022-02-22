@@ -1,7 +1,10 @@
 <template>
   <q-page padding>
-    <json-form ref="form" :schema="client" @submit="onSubmit">
-    </json-form>
+    <q-form @submit="onSubmit">
+      <json-form ref="form" :schema="client" @submit="onSubmit">
+        <q-btn :label="$q.lang.label.ok" color="primary" type="submit"/>
+      </json-form>
+    </q-form>
   </q-page>
 </template>
 
@@ -17,7 +20,7 @@ export default {
   },
   methods: {
     onSubmit(val) {
-      alert(JSON.stringify(val, undefined, 2))
+      alert(JSON.stringify(this.$refs.form.getValue(), undefined, 2))
     }
   }
 }

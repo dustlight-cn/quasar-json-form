@@ -1,11 +1,8 @@
 <template>
   <q-page padding>
-    <q-form @submit="test">
-      <json-form-editor ref="jf" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema">
-
-        <q-btn type="submit" label="Value" color="primary"/>
-      </json-form-editor>
-    </q-form>
+    <json-form-editor ref="jf" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema">
+      <q-btn type="submit" label="Value" color="primary"/>
+    </json-form-editor>
   </q-page>
 </template>
 
@@ -19,14 +16,11 @@ export default {
     return {
       client: client,
       clientUi: clientUi,
-      metaSchema: {}
+      metaSchema: {},
+      miniState: false
     }
   },
   methods: {
-    test(...args) {
-      console.log(...args)
-      this.getValue()
-    },
     getValue() {
       let result = this.validate()
       console.log(result)
@@ -47,8 +41,6 @@ export default {
 
 </script>
 
-<style lang="sass" scoped>
-.directive-target
-  width: 50px
-  height: 50px
+<style scoped lang="sass">
+
 </style>
