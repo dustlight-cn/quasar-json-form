@@ -8,12 +8,12 @@
 
 <script>
 import Validate from './validate'
+import {props} from "./common";
 
 export default {
   name: "CommonField",
   props: {
-    modelValue: Object,
-    i18n: Object
+    ...props
   },
   data() {
     return {

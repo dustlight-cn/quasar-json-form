@@ -1,0 +1,22 @@
+const components = {
+    "": () => import('./UnknownField'),
+    "string": () => import('./StringField'),
+    // "number": () => import('./NumberItem'),
+    // "integer": () => import('./NumberItem'),
+    // "boolean": () => import('./BooleanItem'),
+    // "object": () => import('./ObjectItem'),
+    // "array": () => import('./ArrayItem'),
+    // "_enum": () => import('./EnumItem')
+}
+
+function getComponent(schema) {
+    if(schema){
+        if(schema.type && components[schema.type])
+            return components[schema.type]
+        // if(schema.enum)
+            // return components[]
+    }
+    return components[""]
+}
+
+export default getComponent
