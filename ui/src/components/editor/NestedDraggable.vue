@@ -4,6 +4,7 @@
       :list="list"
       :group="{ name: rootName }"
       item-key="name"
+      @click.stop="(e) => this.onSelect(e,null)"
   >
     <template #header>
       <div class="q-pa-sm">
@@ -12,8 +13,10 @@
       </div>
     </template>
     <template #item="{ element,index }">
-      <div class="q-gutter-sm q-pa-sm">
+      <div class="q-gutter-sm q-pa-sm"
+           @click.stop="(e) => this.onSelect(e,index,element)">
         <nested-draggable v-if="element.schema.type == 'object'"
+                          @select="(e)=>this.$emit('select', e)"
                           :root-name="rootName"
                           :name="element.name"
                           :schema="element.schema"
@@ -45,12 +48,18 @@ export default {
     schema: Object,
     uiSchema: Object
   },
+  emits: ["select"],
   components: {
     draggable
   },
   data() {
     return {
-      list: []
+      list: [],
+      self: {
+        name: this.name,
+        schema: this.schema,
+        additional: this.uiSchema
+      }
     }
   },
   watch: {
@@ -60,16 +69,22 @@ export default {
   },
   computed: {
     type() {
-      return this.schema ? this.schema.type : ""
+      return this.self.schema ? this.self.schema.type : ""
     },
     title() {
-      return this.schema ? this.schema.title || this.name : ""
+      return this.self.schema ? this.self.schema.title || this.name : ""
     },
     subtitle() {
-      return this.schema ? this.schema.description : ""
+      return this.self.schema ? this.self.schema.description : ""
     },
   },
   methods: {
+    onSelect(e, index, element) {
+      if (index != null)
+        this.$emit("select", element);
+      else
+        this.$emit("select", this.self);
+    },
     computeSchema(index) {
       if (index < 0 || index > this.list.length)
         return null
@@ -84,7 +99,7 @@ export default {
           let child = this.schema.properties[name]
           let c = null
           let properties = {}
-          let additional = this.uiSchema ? this.uiSchema[name] : null
+          let additional = this.uiSchema ? this.uiSchema[name] : {}
           if (child) {
             if (child.type != 'object') {
               if (child.type) {

@@ -4,7 +4,11 @@
         :root-name="name || 'root'"
         :name="name || 'root'"
         :schema="schema"
+        @select="(element)=>this.selected = element"
         :ui-schema="uiSchema"/>
+    <div>
+      {{ selected }}
+    </div>
   </div>
 </template>
 
@@ -25,6 +29,7 @@ export default {
   data() {
     return {
       drag: false,
+      selected: null
     }
   },
   methods: {},
