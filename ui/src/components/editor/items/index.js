@@ -1,8 +1,8 @@
 const components = {
     "": () => import('./UnknownField'),
     "string": () => import('./StringField'),
-    // "number": () => import('./NumberItem'),
-    // "integer": () => import('./NumberItem'),
+    "number": () => import('./NumberField'),
+    "integer": () => import('./NumberField'),
     // "boolean": () => import('./BooleanItem'),
     // "object": () => import('./ObjectItem'),
     // "array": () => import('./ArrayItem'),

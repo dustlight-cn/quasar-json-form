@@ -3,6 +3,7 @@ export default {
     title: "标题",
     description: "描述",
     type: "类型",
+    const: "常量",
     typeName: {
         "string": "字符串",
         "object": "对象",

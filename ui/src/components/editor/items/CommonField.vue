@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-input :rules="rules" v-model="modelValue.name" :label="i18n.get('name')" filled/>
+    <q-input :rules="nameRules" v-model="modelValue.name" :label="i18n.get('name')" filled/>
     <q-input hint=" " v-model="modelValue.schema.title" :label="i18n.get('title')" filled/>
     <q-input hint=" " v-model="modelValue.schema.description" :label="i18n.get('description')" autogrow filled/>
     <q-field hint=" " :label="i18n.get('type')" filled v-model="type">
@@ -8,6 +8,8 @@
         {{ type }}
       </template>
     </q-field>
+    <q-input hint=" " :debounce="500" :rules="jsonRule" v-model="schemaConst" :label="i18n.get('const')"
+             autogrow filled/>
   </div>
 </template>
 
@@ -21,8 +23,16 @@ export default {
     ...props
   },
   data() {
+    let validate = new Validate(this.i18n)
+
     return {
-      rules: []
+      nameRules: [
+        ...validate.notEmpty
+      ],
+      jsonRule: [
+        validate.jsonRule
+      ],
+      schemaConst: null
     }
   },
   computed: {
@@ -38,8 +48,26 @@ export default {
       return "-"
     }
   },
+  methods: {
+    loadConst() {
+      this.schemaConst = JSON.stringify(this.modelValue.schema.const, null, 2)
+    }
+  },
+  watch: {
+    "modelValue.schema.const"() {
+      this.loadConst()
+    },
+    schemaConst() {
+      try {
+        let obj = JSON.parse(this.schemaConst)
+        this.modelValue.schema.const = obj
+      } catch (e) {
+
+      }
+    }
+  },
   mounted() {
-    this.rules.push(...new Validate(this.i18n).notEmpty)
+    this.loadConst()
   }
 }
 </script>
