@@ -36,9 +36,17 @@ function setup(props) {
         rules: [
             v => ajv.validate(v, props.name)
         ],
-        ajv: ajv
+        ajv: ajv,
+        ajvError: null
     })
-    let w = watch(() => props.schema, (val) => ajv.setSchema(val))
+    let w = watch(props.schema, (val) => {
+        try {
+            ajv.setSchema(val)
+        } catch (e) {
+            data.ajvError = e
+            console.warn(e)
+        }
+    })
 
     onMounted(() => {
         ajv.setSchema(props.schema)
