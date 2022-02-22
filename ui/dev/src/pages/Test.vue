@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <q-form @submit="onSubmit">
-      <json-form ref="form" :schema="client" @submit="onSubmit">
+      <json-form ref="form" :schema="schema" :ui-schema="ui" :meta-schema="metaSchema" @submit="onSubmit">
         <q-btn :label="$q.lang.label.ok" color="primary" type="submit"/>
       </json-form>
     </q-form>
@@ -9,13 +9,16 @@
 </template>
 
 <script>
-import client from "../resources/client.json"
+import schema from "../resources/client.json"
+import ui from "../resources/client.ui.json"
 
 export default {
   name: "Test",
   data() {
     return {
-      client: client
+      schema: schema,
+      ui: ui,
+      metaSchema: {}
     }
   },
   methods: {

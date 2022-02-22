@@ -1,27 +1,33 @@
 <template>
   <draggable
       class="dragArea"
-      tag="ul"
       :list="list"
-      :group="{ name: 'root' }"
+      :group="{ name: rootName }"
       item-key="name"
   >
     <template #header>
-      <p>{{ name }}</p>
+      <div class="q-pa-sm">
+        <div class="text-h6">{{ title }}</div>
+        <div class="text-grey text-caption">{{ subtitle }}</div>
+      </div>
     </template>
-    <template #item="{ element }">
-      <li>
-        <nested-draggable v-if="element.schema.type == 'object'" :schema="element.schema" :name="element.name"/>
+    <template #item="{ element,index }">
+      <div class="q-gutter-sm q-pa-sm">
+        <nested-draggable v-if="element.schema.type == 'object'"
+                          :root-name="rootName"
+                          :name="element.name"
+                          :schema="element.schema"
+                          :ui-schema="element.additional"/>
         <div v-else-if="element.component">
           <component
               :is="element.component"
               :schema="element.schema"
               :name="element.name"
-              :additional="null"
+              :additional="element.additional"
               :item-val="null"
               :properties="element.properties"/>
         </div>
-      </li>
+      </div>
     </template>
   </draggable>
 </template>
@@ -34,8 +40,10 @@ import {defineAsyncComponent, shallowRef} from "vue";
 export default {
   name: "NestedDraggable",
   props: {
+    rootName: String,
     name: String,
-    schema: Object
+    schema: Object,
+    uiSchema: Object
   },
   components: {
     draggable
@@ -53,7 +61,13 @@ export default {
   computed: {
     type() {
       return this.schema ? this.schema.type : ""
-    }
+    },
+    title() {
+      return this.schema ? this.schema.title || this.name : ""
+    },
+    subtitle() {
+      return this.schema ? this.schema.description : ""
+    },
   },
   methods: {
     computeSchema(index) {
@@ -70,6 +84,7 @@ export default {
           let child = this.schema.properties[name]
           let c = null
           let properties = {}
+          let additional = this.uiSchema ? this.uiSchema[name] : null
           if (child) {
             if (child.type != 'object') {
               if (child.type) {
@@ -83,12 +98,13 @@ export default {
               properties.schema = child.items
             }
           }
-          console.log(child.type, properties)
+
           this.list.push({
             name: name,
             schema: child,
             component: shallowRef(defineAsyncComponent(c instanceof Function ? c : () => Promise.resolve(c))),
-            properties: properties
+            properties: properties,
+            additional: additional
           })
           i++;
         }

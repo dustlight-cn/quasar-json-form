@@ -1,8 +1,10 @@
 <template>
   <div>
     <nested-draggable
+        :root-name="name || 'root'"
         :name="name || 'root'"
-        :schema="schema"/>
+        :schema="schema"
+        :ui-schema="uiSchema"/>
   </div>
 </template>
 
@@ -18,14 +20,11 @@ export default {
     name: String,
     schema: Object,
     uiSchema: Object,
-    formData: Object,
     metaSchema: Object
   },
   data() {
     return {
-      treeNodes: [],
       drag: false,
-      list: []
     }
   },
   methods: {},
