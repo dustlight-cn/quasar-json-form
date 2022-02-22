@@ -58,7 +58,8 @@ export default {
       self: {
         name: this.name,
         schema: this.schema,
-        additional: this.uiSchema
+        additional: this.uiSchema,
+        children: this.list
       }
     }
   },
@@ -82,8 +83,10 @@ export default {
     onSelect(e, index, element) {
       if (index != null)
         this.$emit("select", element);
-      else
+      else {
+        this.self.children = this.list
         this.$emit("select", this.self);
+      }
     },
     computeSchema(index) {
       if (index < 0 || index > this.list.length)

@@ -4,7 +4,7 @@ const components = {
     "number": () => import('./NumberField'),
     "integer": () => import('./NumberField'),
     "boolean": () => import('./BooleanField'),
-    // "object": () => import('./ObjectItem'),
+    "object": () => import('./ObjectField'),
     // "array": () => import('./ArrayItem'),
     "_enum": () => import('./EnumField')
 }

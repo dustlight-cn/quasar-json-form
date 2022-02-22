@@ -13,6 +13,9 @@ export default {
         "array": "数组",
         "enum": "枚举值"
     },
+    object: {
+        required: "必填"
+    },
     string: {
         pattern: "正则模式",
         minLength: "最小长度",
