@@ -88,11 +88,12 @@ export default {
         this.$emit("select", this.self);
       }
     },
-    computeSchema(index) {
-      if (index < 0 || index > this.list.length)
-        return null
-      let node = this.list[index]
-      return node.schema
+    getSchema() {
+      this.schema.properties = {}
+      this.list.forEach(ele => {
+        this.schema.properties[ele.name] = ele.schema
+      })
+      return this.schema
     },
     adapt() {
       this.list = []

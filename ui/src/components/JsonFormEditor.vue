@@ -4,6 +4,7 @@
         v-model="split">
       <template v-slot:before>
         <nested-draggable
+            ref="nested"
             :root-name="name || 'root'"
             :name="name || 'root'"
             :schema="schema"
@@ -14,6 +15,7 @@
         <field-edit :i18n="i18n_" v-model="selected"/>
       </template>
     </q-splitter>
+    <slot/>
   </div>
 </template>
 
@@ -45,7 +47,11 @@ export default {
       languages: languages
     }
   },
-  methods: {},
+  methods: {
+    getSchema(){
+      return this.$refs.nested.getSchema()
+    }
+  },
   mounted() {
     let df = this.defaultLanguage
     if (!df)

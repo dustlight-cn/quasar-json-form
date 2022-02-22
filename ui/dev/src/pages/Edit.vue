@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
-    <json-form-editor ref="jf" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema">
-      <q-btn type="submit" label="Value" color="primary"/>
+    <json-form-editor ref="editor" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema">
+      <q-btn @click="getValue" label="Value" color="primary"/>
     </json-form-editor>
   </q-page>
 </template>
@@ -22,17 +22,9 @@ export default {
   },
   methods: {
     getValue() {
-      let result = this.validate()
-      console.log(result)
-      if (!result)
-        return
-      console.log(this.$refs.jf)
-      let obj = this.$refs.jf.getValue()
-      console.log(obj)
-      alert(JSON.stringify(obj, undefined, 2))
-    },
-    validate() {
-      return this.$refs.jf.validate()
+      let schema = this.$refs.editor.getSchema()
+      console.log(schema)
+      alert(JSON.stringify(schema, undefined, 2))
     }
   },
   mounted() {
