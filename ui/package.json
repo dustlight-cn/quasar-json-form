@@ -58,6 +58,7 @@
   "dependencies": {
     "@dustlight/json-form-core": "file:../json-form-core",
     "ajv": "^6.12.6",
-    "ajv-i18n": "3.1"
+    "ajv-i18n": "3.1",
+    "vuedraggable": "^4.1.0"
   }
 }

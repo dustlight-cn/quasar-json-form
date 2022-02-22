@@ -1,27 +1,21 @@
 <template>
   <div>
-    <q-tree node-key="name" label-key="name"
-            :selected="select"
-            default-expand-all
-            :nodes="treeNodes"/>
-    <json-form
-        ref="jsonForm"
-        :schema="schema"
-        :editable="true"
-        :ui-schema="uiSchema"
-        :form-data="formData"
-        :meta-schema="metaSchema"/>
+    <nested-draggable
+        :name="name || 'root'"
+        :schema="schema"/>
   </div>
 </template>
 
 <script>
 import JsonForm from "./JsonForm";
+import draggable from 'vuedraggable'
+import NestedDraggable from "./editor/NestedDraggable";
 
 export default {
   name: "JsonFormEditor",
-  components: {JsonForm},
+  components: {NestedDraggable, JsonForm, draggable},
   props: {
-    name: Object,
+    name: String,
     schema: Object,
     uiSchema: Object,
     formData: Object,
@@ -29,20 +23,14 @@ export default {
   },
   data() {
     return {
-      treeNodes: []
+      treeNodes: [],
+      drag: false,
+      list: []
     }
   },
-  methods: {
-    select(...args) {
-      console.log(args)
-    }
-  },
+  methods: {},
   mounted() {
-    this.$refs.jsonForm.getTree(this.name || "root")
-        .then(tree => {
-          console.log([tree])
-          this.treeNodes = [tree]
-        })
+
   }
 }
 </script>
