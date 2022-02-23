@@ -1,23 +1,39 @@
 <template>
   <q-page padding>
-    <JsonForm ref="form" :schema="client"/>
-    <q-btn label="Submit" @click="getValue"/>
+    <q-toggle v-model="readonly" label="readonly"/>
+    <q-form @submit="onSubmit">
+      <json-form ref="form"
+                 :schema="schema"
+                 :ui-schema="ui"
+                 :readonly="readonly"
+                 :meta-schema="metaSchema"
+                 :formData="formData"
+                 @submit="onSubmit">
+        <q-btn :label="$q.lang.label.ok" color="primary" type="submit"/>
+      </json-form>
+    </q-form>
   </q-page>
 </template>
 
 <script>
-import client from "../resources/client.json"
+import schema from "../resources/client.json"
+import ui from "../resources/client.ui.json"
+import defaultData from "../resources/data.json"
 
 export default {
   name: "Test",
   data() {
     return {
-      client: client
+      schema: schema,
+      ui: ui,
+      metaSchema: {},
+      formData: defaultData,
+      readonly: true
     }
   },
   methods: {
-    getValue() {
-      alert(JSON.stringify(this.$refs.form.getValue(), undefined, "  "))
+    onSubmit(val) {
+      alert(JSON.stringify(this.$refs.form.getValue(), undefined, 2))
     }
   }
 }

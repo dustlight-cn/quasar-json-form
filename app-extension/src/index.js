@@ -15,6 +15,14 @@ function extendConf (conf) {
 
   // make sure the stylesheet goes through webpack to avoid SSR issues
   conf.css.push('~@dustlight/quasar-ui-json-form/src/index.sass')
+
+  // 注入动画
+  conf.animations.push(...['fadeInUp'])
+
+  // 注入依赖插件
+  conf.framework.plugins.push(...[
+    "Dialog"
+  ])
 }
 
 module.exports = function (api) {

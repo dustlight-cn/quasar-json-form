@@ -36,17 +36,19 @@ module.exports = function (ctx) {
       config: {},
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        "Dialog"
+      ]
     },
 
     // animations: 'all', // --- includes all animations
-    animations: [],
+    animations: ['fadeInUp'],
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'history',
 
-      chainWebpack (chain) {
+      chainWebpack(chain) {
         chain.resolve.alias.merge({
           ui: path.resolve(__dirname, `../src/index.esm.js`)
         })

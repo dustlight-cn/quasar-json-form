@@ -8,23 +8,48 @@
       "type": "string"
     },
     "birth": {
-      "format": "date",
+      "format": "date-time",
       "type": "string"
-    },
-    "company": {
-      "form": "company",
-      "$ref": "record"
     },
     "value": {
       "title": "价值",
       "description": "客户的价值",
       "type": "number"
+    },
+    "additional": {
+      "type": "object",
+      "title": "额外信息",
+      "description": "额外的信息",
+      "properties": {
+        "check": {
+          "title": "是否 VIP",
+          "description": "该客户是否 VIP",
+          "type": "boolean",
+          "const": true
+        },
+        "location": {
+          "title": "地区",
+          "description": "客户所属地区",
+          "enum": [
+            "中国大陆",
+            "中国香港",
+            "美国"
+          ]
+        },
+        "contact": {
+          "title": "联系方式",
+          "description": "客户的联系方式",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "required": [
-    "name",
-    "company"
-  ],
-  "$schema": "https://datacenter.dustlight.cn/v1/schemas/form",
-  "$id": "https://datacenter.dustlight.cn/v1/schemas/"
+    "name"
+  ]
 }
