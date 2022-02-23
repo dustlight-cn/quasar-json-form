@@ -10,6 +10,9 @@
     </q-field>
     <q-input hint=" " :debounce="500" :rules="jsonRule" v-model="schemaConst" :label="i18n.get('const')"
              autogrow filled/>
+    <div class="text-right">
+      <q-btn v-if="removable" icon="delete" round flat dense @click="(...args)=>this.$emit('onDelete',...args)"/>
+    </div>
   </div>
 </template>
 
@@ -21,8 +24,15 @@ export default {
   name: "CommonField",
   props: {
     ...props,
-    ignoreName: Boolean
+    ignoreName: Boolean,
+    removable: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    }
   },
+  emits: ['onDelete'],
   data() {
     let validate = new Validate(this.i18n)
 

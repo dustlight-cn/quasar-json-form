@@ -1,6 +1,10 @@
 <template>
   <div class="q-gutter-xs" v-if="modelValue">
-    <common-field :ignore-name="ignoreName" :i18n="i18n" class="q-gutter-xs" v-model="modelValue"/>
+    <common-field @onDelete="(...args)=>this.$emit('onDelete',...args)"
+                  :ignore-name="ignoreName || modelValue.isRoot"
+                  :removable="!modelValue.isRoot"
+                  :i18n="i18n"
+                  class="q-gutter-xs" v-model="modelValue"/>
     <q-separator class="q-mb-md"/>
     <component v-if="fieldEditor" :is="fieldEditor" :i18n="i18n" v-model="modelValue" class="q-gutter-xs"/>
   </div>
@@ -19,6 +23,7 @@ export default {
     i18n: Object,
     ignoreName: Boolean
   },
+  emits: ['onDelete'],
   data() {
     return {
       fieldEditor: null

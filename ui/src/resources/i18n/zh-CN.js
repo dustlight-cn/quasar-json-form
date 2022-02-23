@@ -19,7 +19,7 @@ export default {
     array: {
         minItems: "至少项目数",
         maxItems: "至多项目数",
-        items: "项目属性"
+        items: "项目"
     },
     string: {
         pattern: "正则模式",
@@ -54,5 +54,9 @@ export default {
         gteZero: "必须大于或等于零！",
         gtZero: "必须大于零！",
         gteMin: "必须大于或等于最小长度！"
+    },
+    messages: {
+        deleteItemTitle: "删除字段",
+        deleteItem: "确定要删除该字段吗？"
     }
 }

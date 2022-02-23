@@ -1,39 +1,47 @@
 <template>
-  <draggable
-      class="dragArea"
-      :list="list"
-      :move="onMove"
-      :group="{ name: rootName }"
-      item-key="name"
-      @click.stop="(e) => this.onSelect(e,null)"
-  >
-    <template #header>
-      <div class="q-pa-sm">
-        <div class="text-h6">{{ title }}</div>
-        <div class="text-grey text-caption">{{ subtitle }}</div>
-      </div>
-    </template>
-    <template #item="{ element,index }">
-      <div class="q-gutter-sm q-pa-sm"
-           @click.stop="(e) => this.onSelect(e,index,element)">
-        <nested-draggable v-if="element.schema.type == 'object' || element.schema.type == 'array'"
-                          @select="(e)=>this.$emit('select', e)"
-                          :root-name="rootName"
-                          :name="element.name"
-                          :schema="element.schema"
-                          :ui-schema="element.additional"/>
-        <div v-else-if="element.component">
-          <component
-              :is="element.component"
-              :schema="element.schema"
-              :name="element.name"
-              :additional="element.additional"
-              :item-val="null"
-              :properties="element.properties"/>
+  <q-card class="q-ma-xs" flat bordered>
+    <draggable
+        class="dragArea"
+        :list="list"
+        :move="onMove"
+        :group="{ name: rootName }"
+        item-key="name"
+        @click.stop="(e) => this.onSelect(e,null)"
+    >
+      <template #header>
+        <div class="q-pa-sm">
+          <div class="text-h6">{{ title }}</div>
+          <div class="text-grey text-caption">{{ subtitle }}</div>
         </div>
-      </div>
-    </template>
-  </draggable>
+        <div v-if="schema.type=='array' && !schema.items" class="text-center q-pa-md text-grey text-caption">
+          {{ i18n.get('array.items') }}...
+        </div>
+      </template>
+      <template #item="{ element,index }">
+        <div class="q-gutter-sm q-pa-sm"
+             style="cursor: move"
+             @click.stop="(e) => this.onSelect(e,index,element)">
+          <nested-draggable v-if="element.schema.type == 'object' || element.schema.type == 'array'"
+                            @select="onChildSelect"
+                            :root-name="rootName"
+                            :i18n="i18n"
+                            :is-root="false"
+                            :name="element.name"
+                            :schema="element.schema"
+                            :ui-schema="element.additional"/>
+          <div v-else-if="element.component">
+            <component
+                :is="element.component"
+                :schema="element.schema"
+                :name="element.name"
+                :additional="element.additional"
+                :item-val="null"
+                :properties="element.properties"/>
+          </div>
+        </div>
+      </template>
+    </draggable>
+  </q-card>
 </template>
 
 <script>
@@ -47,7 +55,14 @@ export default {
     rootName: String,
     name: String,
     schema: Object,
-    uiSchema: Object
+    uiSchema: Object,
+    i18n: Object,
+    isRoot: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    }
   },
   emits: ["select"],
   components: {
@@ -60,7 +75,8 @@ export default {
         name: this.name,
         schema: this.schema,
         additional: this.uiSchema,
-        children: this.list
+        children: this.list,
+        isRoot: this.isRoot
       }
     }
   },
@@ -88,20 +104,35 @@ export default {
   },
   methods: {
     onMove(evt, originalEvent) {
-      if (evt && evt.to && evt.to.__draggable_component__ && evt.to.__draggable_component__.$parent) {
-        let node = evt.to.__draggable_component__.$parent
+      if (evt && evt.to && evt.to.__draggable_component__
+          && evt.to.__draggable_component__.$parent && evt.to.__draggable_component__.$parent.$parent) {
+
+        let node = evt.to.__draggable_component__.$parent.$parent
+        console.log(node)
         if (node.schema.type == "array" && node.list.length > 0)
           return false
       }
-
+      return true
     },
     onSelect(e, index, element) {
       if (index != null)
-        this.$emit("select", element);
+        this.$emit("select", element, () => this.list.splice(this.list.indexOf(element), 1));
       else {
         this.self.children = this.list
         this.$emit("select", this.self);
       }
+    },
+    onChildSelect(element, deleteFun) {
+      if (deleteFun == null) {
+        for (let i in this.list) {
+          let item = this.list[i]
+          if (item.name == element.name) {
+            deleteFun = () => this.list.splice(this.list.indexOf(item), 1)
+            break
+          }
+        }
+      }
+      this.$emit("select", element, deleteFun);
     },
     getSchema() {
       if (this.schema.type == 'object') {
@@ -158,7 +189,8 @@ export default {
               schema: child,
               component: shallowRef(defineAsyncComponent(c instanceof Function ? c : () => Promise.resolve(c))),
               properties: properties,
-              additional: additional
+              additional: additional,
+              isRoot: false
             })
             i++;
           }
@@ -176,7 +208,8 @@ export default {
             schema: item,
             component: shallowRef(defineAsyncComponent(c instanceof Function ? c : () => Promise.resolve(c))),
             properties: {},
-            additional: {}
+            additional: {},
+            isRoot: false
           })
         }
       }
@@ -190,7 +223,7 @@ export default {
 
 <style scoped>
 .dragArea {
-  min-height: 50px;
-  outline: 1px dashed;
+  /*min-height: 50px;*/
+  /*outline: 1px dashed;*/
 }
 </style>

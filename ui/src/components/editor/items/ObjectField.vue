@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-subtitle2">
+    <div class="text-subtitle2" v-if="modelValue.children && modelValue.children.length > 0">
       {{ i18n.get("object.required") }}
     </div>
     <q-list>

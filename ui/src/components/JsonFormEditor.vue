@@ -5,14 +5,15 @@
       <template v-slot:before>
         <nested-draggable
             ref="nested"
+            :i18n="i18n_"
             :root-name="name || 'root'"
             :name="name || 'root'"
             :schema="schema"
-            @select="(element)=>this.selected = element"
+            @select="onSelect"
             :ui-schema="uiSchema"/>
       </template>
       <template v-slot:after>
-        <field-edit :i18n="i18n_" v-model="selected"/>
+        <field-edit @onDelete="onDelete" :i18n="i18n_" v-model="selected"/>
       </template>
     </q-splitter>
     <slot/>
@@ -41,13 +42,38 @@ export default {
     return {
       drag: false,
       selected: null,
+      deleteFun: null,
       split: 75,
       i18n_: null,
       languages: languages
     }
   },
   methods: {
-    getSchema(){
+    onDelete(...args) {
+      if (this.deleteFun) {
+        this.$q.dialog({
+          title: this.i18n_.get("messages.deleteItemTitle"),
+          message: this.i18n_.get("messages.deleteItem"),
+          cancel: {
+            flat: true,
+            color: "grey"
+          },
+          ok: {
+            color: "negative"
+          }
+        })
+            .onOk(() => {
+              this.deleteFun()
+              this.selected = null
+              this.deleteFun = null
+            })
+      }
+    },
+    onSelect(element, deleteFun) {
+      this.selected = element
+      this.deleteFun = deleteFun
+    },
+    getSchema() {
       return this.$refs.nested.getSchema()
     }
   },
