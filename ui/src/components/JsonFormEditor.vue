@@ -11,7 +11,7 @@
                 side="left" bordered>
         <q-scroll-area class="fit">
           <prefab-list
-              :root-name="name || 'root'" :i18n="i18n_" :prefabs="prefabs"/>
+              :root-name="name" :i18n="i18n_" :prefabs="prefabs"/>
         </q-scroll-area>
       </q-drawer>
 
@@ -21,11 +21,12 @@
 
       <q-page-container>
         <q-page>
-          <nested-draggable
+          <component
+              :is="c"
               ref="nested"
               :i18n="i18n_"
-              :root-name="name || 'root'"
-              :name="name || 'root'"
+              :root-name="name"
+              :name="name"
               :schema="schema"
               @select="onSelect"
               :ui-schema="uiSchema"/>
@@ -44,12 +45,17 @@ import FieldEdit from "./editor/FieldEdit";
 import i18nTool from './editor/i18n'
 import languages from '../resources/i18n'
 import PrefabList from "./editor/PrefabList";
-
+import {shallowRef, defineAsyncComponent} from 'vue'
 export default {
   name: "JsonFormEditor",
   components: {PrefabList, FieldEdit, NestedDraggable, draggable},
   props: {
-    name: String,
+    name: {
+      type: String,
+      default() {
+        return "root"
+      }
+    },
     schema: Object,
     uiSchema: Object,
     metaSchema: Object,
@@ -65,7 +71,8 @@ export default {
       selected: null,
       deleteFun: null,
       i18n_: null,
-      languages: languages
+      languages: languages,
+      c: shallowRef(defineAsyncComponent(() => import('./editor/NestedDraggable'))) // 必须以这种方式引用，否则无法拖动根部节点，不知为何
     }
   },
   watch: {
