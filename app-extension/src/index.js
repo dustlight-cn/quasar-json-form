@@ -20,7 +20,7 @@ function extendConf (conf) {
   conf.animations.push(...['fadeInUp'])
 
   // 注入依赖插件
-  conf.plugins.push(...[
+  conf.framework.plugins.push(...[
     "Dialog"
   ])
 }

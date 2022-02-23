@@ -1,6 +1,6 @@
 {
   "name": "@dustlight/quasar-app-extension-json-form",
-  "version": "0.0.1-alpha-3",
+  "version": "0.0.2-alpha",
   "description": "JSON Schema based form toolkit for Quasar",
   "author": "Hansin1997 <hansin@dustlight.cn>",
   "license": "MIT",
@@ -12,7 +12,7 @@
   "bugs": "https://github.com/dustlight-cn/quasar-json-form/issues",
   "homepage": "https://github.com/dustlight-cn/quasar-json-form",
   "dependencies": {
-    "@dustlight/quasar-ui-json-form": "0.0.1-alpha-3"
+    "@dustlight/quasar-ui-json-form": "0.0.2-alpha"
   },
   "engines": {
     "node": ">= 8.9.0",

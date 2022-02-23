@@ -1,6 +1,6 @@
 {
   "name": "@dustlight/json-form-core",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "description": "Json Form Core",
   "main": "dist/index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@dustlight/quasar-ui-json-form",
-  "version": "0.0.1-alpha-3",
+  "version": "0.0.2-alpha",
   "author": "Hansin1997 <hansin@dustlight.cn>",
   "description": "JSON Schema based form toolkit for Quasar",
   "license": "MIT",
@@ -56,7 +56,7 @@
     "last 4 iOS versions"
   ],
   "dependencies": {
-    "@dustlight/json-form-core": "file:../json-form-core",
+    "@dustlight/json-form-core": "0.0.1-alpha",
     "ajv": "^6.12.6",
     "ajv-i18n": "3.1",
     "vuedraggable": "^4.1.0"
