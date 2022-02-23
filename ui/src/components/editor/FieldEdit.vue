@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-xs" v-if="modelValue">
-    <common-field :i18n="i18n" class="q-gutter-xs" v-model="modelValue"/>
+    <common-field :ignore-name="ignoreName" :i18n="i18n" class="q-gutter-xs" v-model="modelValue"/>
     <q-separator class="q-mb-md"/>
     <component v-if="fieldEditor" :is="fieldEditor" :i18n="i18n" v-model="modelValue" class="q-gutter-xs"/>
   </div>
@@ -16,7 +16,8 @@ export default {
   components: {CommonField},
   props: {
     modelValue: Object,
-    i18n: Object
+    i18n: Object,
+    ignoreName: Boolean
   },
   data() {
     return {

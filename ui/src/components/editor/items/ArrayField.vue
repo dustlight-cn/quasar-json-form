@@ -9,10 +9,10 @@
              type="number"
              filled :label="i18n.get('array.maxItems')"/>
 
-    <div class="text-subtitle2">
-      {{ i18n.get("array.items") }}
-    </div>
-    <field-edit v-if="itemElement.schema" :model-value="itemElement" :i18n="i18n"/>
+<!--    <div class="text-subtitle2">-->
+<!--      {{ i18n.get("array.items") }}-->
+<!--    </div>-->
+<!--    <field-edit v-if="itemElement.schema" :ignore-name="true" :model-value="itemElement" :i18n="i18n"/>-->
   </div>
 </template>
 
