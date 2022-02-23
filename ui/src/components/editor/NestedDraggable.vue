@@ -66,6 +66,12 @@ export default {
   watch: {
     schema() {
       this.adapt()
+    },
+    list: {
+      handler() {
+        this.getSchema()
+      },
+      deep: true
     }
   },
   computed: {
@@ -90,9 +96,21 @@ export default {
     },
     getSchema() {
       this.schema.properties = {}
+      let childSet = new Set
+      if (this.schema.required) {
+        this.schema.required.forEach(n => childSet.add(n))
+      }
       this.list.forEach(ele => {
         this.schema.properties[ele.name] = ele.schema
+        childSet.delete(ele.name)
       })
+      childSet.forEach(left => {
+        let index = this.schema.required.indexOf(left)
+        if (index > -1)
+          this.schema.required.splice(index, 1)
+      })
+      if (this.schema.required && this.schema.required.length == 0)
+        delete this.schema.required
       return this.schema
     },
     adapt() {

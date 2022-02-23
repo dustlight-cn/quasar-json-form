@@ -24,7 +24,9 @@ export default {
     getValue() {
       let schema = this.$refs.editor.getSchema()
       console.log(schema)
-      alert(JSON.stringify(schema, undefined, 2))
+      let json = JSON.stringify(schema, undefined, 2)
+      console.log(json)
+      alert(json)
     }
   },
   mounted() {
