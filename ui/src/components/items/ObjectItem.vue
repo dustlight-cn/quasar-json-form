@@ -9,6 +9,7 @@
           :ref="name"
           :is="components[name]"
           :name="name"
+          :item-val="itemVal ? itemVal[name] : null"
           :schema="properties[name].schema"
           :properties="properties[name].properties"
           :additional="properties[name].additional"

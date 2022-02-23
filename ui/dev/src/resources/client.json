@@ -16,7 +16,7 @@
       "description": "客户的价值",
       "type": "number"
     },
-    "addition": {
+    "additional": {
       "type": "object",
       "title": "额外信息",
       "description": "额外的信息",

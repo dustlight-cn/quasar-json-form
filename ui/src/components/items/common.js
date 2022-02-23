@@ -7,7 +7,7 @@ const props = {
     schema: Object,
     additional: Object,
     name: String,
-    itemVal: Object,
+    itemVal: null,
     properties: Object
 }
 
