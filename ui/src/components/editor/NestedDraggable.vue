@@ -91,6 +91,11 @@ export default {
     list: {
       handler() {
         this.getSchema()
+        this.list.forEach(ele => {
+          if (!ele.additional)
+            ele.additional = this.uiSchema[ele.name] = {}
+        })
+        this.getUiSchema()
       },
       deep: true
     }
@@ -167,6 +172,53 @@ export default {
       }
       return this.schema
     },
+    getUiSchema() {
+      if (this.schema.type == 'array')
+        return this.uiSchema
+
+      function hasField(obj) {
+        if (obj) {
+          for (let key in obj)
+            return true
+        }
+        return false
+      }
+
+      function clear(obj) {
+        if (obj == null || obj == undefined)
+          return obj
+        if (typeof obj == 'object') {
+          let newObj = {}
+          for (let k in obj) {
+            let c = clear(obj[k])
+            if (c != null && c != undefined && c != '') {
+              if (typeof c == 'object') {
+                if (hasField(c))
+                  newObj[k] = c
+              } else if (typeof c == 'array') {
+                if (c.length > 0)
+                  newObj[k] = c
+              } else
+                newObj[k] = c
+            }
+          }
+          return newObj
+        } else if (typeof obj == 'array')
+          return [...obj]
+        return obj
+      }
+
+      let childSet = new Set
+      for (let k in this.uiSchema)
+        childSet.add(k)
+      this.list.forEach(element => {
+        childSet.delete(element.name)
+      })
+      childSet.forEach(k => {
+        delete this.uiSchema[k]
+      })
+      return clear(this.uiSchema)
+    },
     adapt() {
       this.list = []
       if (this.schema) {
@@ -176,7 +228,7 @@ export default {
             let child = this.schema.properties[name]
             let c = null
             let properties = {}
-            let additional = this.uiSchema ? this.uiSchema[name] : {}
+            let additional = this.uiSchema ? (this.uiSchema[name]) : {}
             if (child) {
               if (child.type != 'object') {
                 if (child.type) {
@@ -216,7 +268,7 @@ export default {
             schema: item,
             component: shallowRef(defineAsyncComponent(c instanceof Function ? c : () => Promise.resolve(c))),
             properties: {},
-            additional: {},
+            additional: this.uiSchema,
             isRoot: false,
             isArrayItem: true
           })

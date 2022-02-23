@@ -27,6 +27,12 @@ export default {
       let json = JSON.stringify(schema, undefined, 2)
       console.log(json)
       alert(json)
+
+      let uiSchema = this.$refs.editor.getUiSchema()
+      console.log(uiSchema)
+      let uiJon = JSON.stringify(uiSchema, undefined, 2)
+      console.log(uiJon)
+      alert(uiJon)
     }
   },
   mounted() {

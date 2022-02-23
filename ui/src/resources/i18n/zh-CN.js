@@ -47,6 +47,13 @@ export default {
         exclusiveMinimum: "不含边界最小值",
         exclusiveMaximum: "不含边界最大值"
     },
+    boolean: {
+        widgetLabel: "组件",
+        widget: {
+            "": "默认",
+            toggle: "开关"
+        }
+    },
     enum: {
         options: "选项"
     },

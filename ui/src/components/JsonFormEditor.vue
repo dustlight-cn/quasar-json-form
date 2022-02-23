@@ -110,6 +110,9 @@ export default {
     },
     getSchema() {
       return this.$refs.nested.getSchema()
+    },
+    getUiSchema() {
+      return this.$refs.nested.getUiSchema()
     }
   },
   mounted() {
