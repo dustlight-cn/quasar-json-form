@@ -1,7 +1,7 @@
 <template>
   <div class="q-gutter-xs" v-if="modelValue">
     <common-field @onDelete="(...args)=>this.$emit('onDelete',...args)"
-                  :ignore-name="ignoreName || modelValue.isRoot"
+                  :ignore-name="ignoreName || modelValue.isRoot || modelValue.isArrayItem"
                   :removable="!modelValue.isRoot"
                   :i18n="i18n"
                   class="q-gutter-xs" v-model="modelValue"/>

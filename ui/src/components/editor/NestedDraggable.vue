@@ -142,6 +142,10 @@ export default {
           this.schema.required.forEach(n => childSet.add(n))
         }
         this.list.forEach(ele => {
+          ele.isArrayItem = false
+          if (!ele.name) {
+            ele.name = (ele.schema.type || "enum") + "_" + new Date().getTime().toString(16)
+          }
           this.schema.properties[ele.name] = ele.schema
           childSet.delete(ele.name)
         })
@@ -153,9 +157,10 @@ export default {
         if (this.schema.required && this.schema.required.length == 0)
           delete this.schema.required
       } else if (this.schema.type == 'array') {
-        if (this.list.length >= 1)
+        if (this.list.length >= 1) {
+          this.list[0].isArrayItem = true
           this.schema.items = this.list[0].schema
-        else
+        } else
           delete this.schema.items
       }
       return this.schema
@@ -190,7 +195,8 @@ export default {
               component: shallowRef(defineAsyncComponent(c instanceof Function ? c : () => Promise.resolve(c))),
               properties: properties,
               additional: additional,
-              isRoot: false
+              isRoot: false,
+              isArrayItem: false
             })
             i++;
           }
@@ -209,7 +215,8 @@ export default {
             component: shallowRef(defineAsyncComponent(c instanceof Function ? c : () => Promise.resolve(c))),
             properties: {},
             additional: {},
-            isRoot: false
+            isRoot: false,
+            isArrayItem: true
           })
         }
       }
