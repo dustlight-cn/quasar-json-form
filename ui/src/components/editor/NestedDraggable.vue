@@ -4,7 +4,7 @@
         class="dragArea"
         :list="list"
         :move="onMove"
-        :group="{ name: rootName }"
+        :group="rootName"
         item-key="name"
         @click.stop="(e) => this.onSelect(e,null)"
     >
@@ -15,6 +15,9 @@
         </div>
         <div v-if="schema.type=='array' && !schema.items" class="text-center q-pa-md text-grey text-caption">
           {{ i18n.get('array.items') }}...
+        </div>
+        <div v-if="schema.type=='object' && list.length == 0" class="text-center q-pa-md text-grey text-caption">
+          {{ i18n.get('object.fields') }}...
         </div>
       </template>
       <template #item="{ element,index }">
@@ -107,9 +110,7 @@ export default {
     onMove(evt, originalEvent) {
       if (evt && evt.to && evt.to.__draggable_component__
           && evt.to.__draggable_component__.$parent && evt.to.__draggable_component__.$parent.$parent) {
-
         let node = evt.to.__draggable_component__.$parent.$parent
-        console.log(node)
         if (node.schema.type == "array" && node.list.length > 0)
           return false
       }

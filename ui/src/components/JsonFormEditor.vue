@@ -1,18 +1,26 @@
 <template>
   <div>
-    <q-layout view="hHh lpR fFf">
-
-      <q-drawer show-if-above v-model="left" side="left" bordered>
-        <!-- drawer content -->
+    <q-layout view="hHh lpr fFf">
+      <q-drawer v-model="left"
+                show-if-above
+                :mini="leftMini"
+                @mouseover="leftMini = false"
+                @mouseout="leftMini = true"
+                :breakpoint="0"
+                :width="200"
+                side="left" bordered>
+        <q-scroll-area class="fit">
+          <prefab-list
+              :root-name="name || 'root'" :i18n="i18n_" :prefabs="prefabs"/>
+        </q-scroll-area>
       </q-drawer>
 
-      <q-drawer ref="right" v-model="right" side="right" bordered>
+      <q-drawer ref="right" v-model="right" side="right" bordered class="q-pr-sm q-pt-md">
         <field-edit @onDelete="onDelete" :i18n="i18n_" v-model="selected"/>
       </q-drawer>
 
       <q-page-container>
         <q-page>
-          <q-toggle v-model="right"/>
           <nested-draggable
               ref="nested"
               :i18n="i18n_"
@@ -35,21 +43,24 @@ import NestedDraggable from "./editor/NestedDraggable";
 import FieldEdit from "./editor/FieldEdit";
 import i18nTool from './editor/i18n'
 import languages from '../resources/i18n'
+import PrefabList from "./editor/PrefabList";
 
 export default {
   name: "JsonFormEditor",
-  components: {FieldEdit, NestedDraggable, draggable},
+  components: {PrefabList, FieldEdit, NestedDraggable, draggable},
   props: {
     name: String,
     schema: Object,
     uiSchema: Object,
     metaSchema: Object,
     i18n: Object,
-    defaultLanguage: String
+    defaultLanguage: String,
+    prefabs: Array
   },
   data() {
     return {
       left: false,
+      leftMini: true,
       right: false,
       selected: null,
       deleteFun: null,

@@ -14,7 +14,8 @@ export default {
         "enum": "枚举值"
     },
     object: {
-        required: "必填"
+        required: "必填",
+        fields: "字段"
     },
     array: {
         minItems: "至少项目数",

@@ -1,17 +1,16 @@
 <template>
   <div>
-    <q-item class="q-pl-xs" v-if="widget == 'toggle'" tag="label" v-ripple>
+    <q-item class="q-pl-xs" v-if="widget == 'toggle'" :tag="readonly ? '' : 'label'" :v-ripple="!readonly"
+            :clickable="!readonly">
       <q-item-section>
         <q-item-label>{{ label }}</q-item-label>
-        <q-item-label caption>
+        <q-item-label v-if="hint" caption>
           {{ hint }}
         </q-item-label>
-        <q-item-label>
+        <q-item-label v-if="errorMessage">
           <transition
               appear
-              v-if="errorMessage"
-              enter-active-class="animated fadeInUp"
-          >
+              enter-active-class="animated fadeInUp">
             <div class="text-negative text-caption">{{ errorMessage }}</div>
           </transition>
         </q-item-label>
@@ -20,18 +19,16 @@
         <q-toggle :disable="readonly" v-model="val"/>
       </q-item-section>
     </q-item>
-    <q-item class="q-pl-xs" v-else tag="label" v-ripple>
+    <q-item class="q-pl-xs" v-else :tag="readonly ? '' : 'label'" :v-ripple="!readonly" :clickable="!readonly">
       <q-item-section>
         <q-item-label>{{ label }}</q-item-label>
-        <q-item-label caption>
+        <q-item-label v-if="hint" caption>
           {{ hint }}
         </q-item-label>
-        <q-item-label>
+        <q-item-label v-if="errorMessage">
           <transition
               appear
-              v-if="errorMessage"
-              enter-active-class="animated fadeInUp"
-          >
+              enter-active-class="animated fadeInUp">
             <div class="text-negative">{{ errorMessage }}</div>
           </transition>
         </q-item-label>
