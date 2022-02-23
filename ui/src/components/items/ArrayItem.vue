@@ -56,6 +56,9 @@ export default {
     properties() {
       this.children = []
       this.component = {}
+    },
+    "schema.minItems"() {
+      this.fill()
     }
   },
   computed: {
@@ -80,6 +83,12 @@ export default {
     }
   },
   methods: {
+    fill() {
+      if (this.minItems) {
+        for (let i = this.children.length; i < this.minItems; i++)
+          this.addChild()
+      }
+    },
     addChild() {
       let key = this.increment++;
       this.children.push(key)
@@ -122,10 +131,7 @@ export default {
     }
   },
   mounted() {
-    if (this.minItems) {
-      for (let i = 0; i < this.minItems; i++)
-        this.addChild()
-    }
+    this.fill()
   }
 }
 </script>

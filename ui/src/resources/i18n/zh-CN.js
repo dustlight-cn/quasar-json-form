@@ -16,6 +16,11 @@ export default {
     object: {
         required: "必填"
     },
+    array: {
+        minItems: "至少项目数",
+        maxItems: "至多项目数",
+        items: "项目属性"
+    },
     string: {
         pattern: "正则模式",
         minLength: "最小长度",
