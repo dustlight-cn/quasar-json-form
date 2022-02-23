@@ -8,7 +8,8 @@ const props = {
     additional: Object,
     name: String,
     itemVal: null,
-    properties: Object
+    properties: Object,
+    readonly: Boolean
 }
 
 function getDefaultValue(schema) {

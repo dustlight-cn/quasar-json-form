@@ -31,7 +31,7 @@
           Value
         </q-item-label>
         <q-item-label>
-          <q-input ref="input" :rules="rules" v-model="val" type="textarea" outlined/>
+          <q-input :readonly="readonly" ref="input" :rules="rules" v-model="val" type="textarea" outlined/>
         </q-item-label>
       </q-item-section>
     </q-item>

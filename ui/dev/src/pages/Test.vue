@@ -1,9 +1,11 @@
 <template>
   <q-page padding>
+    <q-toggle v-model="readonly" label="readonly"/>
     <q-form @submit="onSubmit">
       <json-form ref="form"
                  :schema="schema"
                  :ui-schema="ui"
+                 :readonly="readonly"
                  :meta-schema="metaSchema"
                  :formData="formData"
                  @submit="onSubmit">
@@ -25,7 +27,8 @@ export default {
       schema: schema,
       ui: ui,
       metaSchema: {},
-      formData: defaultData
+      formData: defaultData,
+      readonly: true
     }
   },
   methods: {

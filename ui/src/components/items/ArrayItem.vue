@@ -12,18 +12,19 @@
           <component
               :is="component[key]"
               ref="component"
+              :readonly="readonly"
               :name="this.name + ' ' + (index + 1)"
               :schema="properties.schema"
               :properties="properties.properties"
               :additional="properties.additional"
           />
         </q-item-section>
-        <q-item-section v-if="!minItems || (children.length > minItems)" side top>
+        <q-item-section v-if="!readonly && (!minItems || (children.length > minItems))" side top>
           <q-btn round flat icon="remove" color="primary" @click="()=>removeChild(key)"/>
         </q-item-section>
       </q-item>
 
-      <div class="text-center" v-if="!maxItems || (children.length < maxItems)">
+      <div class="text-center" v-if="!readonly && (!maxItems || (children.length < maxItems))">
         <q-btn round flat icon="add" color="primary" @click="addChild"/>
       </div>
     </q-list>

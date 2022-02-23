@@ -8,6 +8,7 @@
           v-for="(property,name) in properties"
           :ref="name"
           :is="components[name]"
+          :readonly="readonly"
           :name="name"
           :item-val="itemVal ? itemVal[name] : null"
           :schema="properties[name].schema"

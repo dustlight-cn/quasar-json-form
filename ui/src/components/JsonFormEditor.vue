@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import JsonForm from "./JsonForm";
 import draggable from 'vuedraggable'
 import NestedDraggable from "./editor/NestedDraggable";
 import FieldEdit from "./editor/FieldEdit";
@@ -29,7 +28,7 @@ import languages from '../resources/i18n'
 
 export default {
   name: "JsonFormEditor",
-  components: {FieldEdit, NestedDraggable, JsonForm, draggable},
+  components: {FieldEdit, NestedDraggable, draggable},
   props: {
     name: String,
     schema: Object,

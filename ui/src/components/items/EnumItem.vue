@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-select ref="input" v-model="val" :options="options" :rules="rules" filled :label="label" :hint="hint"/>
+    <q-select ref="input" v-model="val" :readonly="readonly" :options="options" :rules="rules" filled :label="label" :hint="hint"/>
   </div>
 </template>
 

@@ -3,6 +3,7 @@
     <slot name="header"/>
     <component ref="root" v-if="component_"
                :is="component_"
+               :readonly="readonly"
                :name="name || ''"
                :meta-schema="metaSchema"
                :schema="schema_"
@@ -27,7 +28,7 @@ export default {
     uiSchema: Object,
     formData: Object,
     metaSchema: Object,
-    editable: Boolean
+    readonly: Boolean
   },
   data() {
     return {

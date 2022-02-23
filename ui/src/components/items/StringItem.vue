@@ -4,6 +4,7 @@
                filled
                ref="input"
                v-model="val"
+               :readonly="readonly"
                :rules="rules"
                :label="label"
                :hint="hint"
@@ -12,6 +13,7 @@
              filled
              ref="input"
              v-model="val"
+             :readonly="readonly"
              :rules="rules"
              :label="label"
              :hint="hint"

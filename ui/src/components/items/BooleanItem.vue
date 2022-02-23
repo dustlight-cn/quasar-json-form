@@ -17,7 +17,7 @@
         </q-item-label>
       </q-item-section>
       <q-item-section avatar side>
-        <q-toggle v-model="val"/>
+        <q-toggle :disable="readonly" v-model="val"/>
       </q-item-section>
     </q-item>
     <q-item class="q-pl-xs" v-else tag="label" v-ripple>
@@ -37,7 +37,7 @@
         </q-item-label>
       </q-item-section>
       <q-item-section avatar side>
-        <q-checkbox v-model="val"/>
+        <q-checkbox :disable="readonly" v-model="val"/>
       </q-item-section>
     </q-item>
   </div>

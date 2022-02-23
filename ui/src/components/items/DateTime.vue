@@ -2,6 +2,7 @@
   <q-field :color="color"
            ref="target"
            :filled="filled"
+           :readonly="readonly"
            :label="label"
            :hint="hint"
            :rules="rules"
@@ -12,7 +13,7 @@
     </template>
     <template v-if="dateEnable" v-slot:prepend>
       <q-icon name="event" class="cursor-pointer">
-        <q-popup-proxy transition-show="scale" transition-hide="scale">
+        <q-popup-proxy v-if="!readonly" transition-show="scale" transition-hide="scale">
           <q-date v-model="val" :mask="mask">
             <div class="row items-center justify-end">
               <q-btn v-close-popup :label="$q.lang.label.ok" color="primary" flat/>
@@ -24,7 +25,7 @@
 
     <template v-if="timeEnable" v-slot:append>
       <q-icon name="access_time" class="cursor-pointer">
-        <q-popup-proxy transition-show="scale" transition-hide="scale">
+        <q-popup-proxy v-if="!readonly" transition-show="scale" transition-hide="scale">
           <q-time v-model="val" :mask="mask" format24h>
             <div class="row items-center justify-end">
               <q-btn v-close-popup :label="$q.lang.label.ok" color="primary" flat/>
@@ -51,6 +52,7 @@ export default {
     hint: String,
     loading: Boolean,
     filled: Boolean,
+    readonly: Boolean,
     color: String
   },
   emits: ['update:modelValue'],
