@@ -1,22 +1,31 @@
 <template>
   <div>
-    <q-splitter
-        v-model="split">
-      <template v-slot:before>
-        <nested-draggable
-            ref="nested"
-            :i18n="i18n_"
-            :root-name="name || 'root'"
-            :name="name || 'root'"
-            :schema="schema"
-            @select="onSelect"
-            :ui-schema="uiSchema"/>
-      </template>
-      <template v-slot:after>
+    <q-layout view="hHh lpR fFf">
+
+      <q-drawer show-if-above v-model="left" side="left" bordered>
+        <!-- drawer content -->
+      </q-drawer>
+
+      <q-drawer ref="right" v-model="right" side="right" bordered>
         <field-edit @onDelete="onDelete" :i18n="i18n_" v-model="selected"/>
-      </template>
-    </q-splitter>
-    <slot/>
+      </q-drawer>
+
+      <q-page-container>
+        <q-page>
+          <q-toggle v-model="right"/>
+          <nested-draggable
+              ref="nested"
+              :i18n="i18n_"
+              :root-name="name || 'root'"
+              :name="name || 'root'"
+              :schema="schema"
+              @select="onSelect"
+              :ui-schema="uiSchema"/>
+          <slot/>
+        </q-page>
+      </q-page-container>
+
+    </q-layout>
   </div>
 </template>
 
@@ -40,12 +49,18 @@ export default {
   },
   data() {
     return {
-      drag: false,
+      left: false,
+      right: false,
       selected: null,
       deleteFun: null,
-      split: 75,
       i18n_: null,
       languages: languages
+    }
+  },
+  watch: {
+    selected() {
+      if (!this.selected)
+        this.$refs.right.hide()
     }
   },
   methods: {
@@ -72,6 +87,8 @@ export default {
     onSelect(element, deleteFun) {
       this.selected = element
       this.deleteFun = deleteFun
+      if (this.selected)
+        this.$refs.right.show()
     },
     getSchema() {
       return this.$refs.nested.getSchema()

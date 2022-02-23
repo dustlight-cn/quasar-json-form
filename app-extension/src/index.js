@@ -18,6 +18,11 @@ function extendConf (conf) {
 
   // 注入动画
   conf.animations.push(...['fadeInUp'])
+
+  // 注入依赖插件
+  conf.plugins.push(...[
+    "Dialog"
+  ])
 }
 
 module.exports = function (api) {

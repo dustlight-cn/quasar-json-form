@@ -33,6 +33,7 @@
             <component
                 :is="element.component"
                 :schema="element.schema"
+                :readonly="true"
                 :name="element.name"
                 :additional="element.additional"
                 :item-val="null"
