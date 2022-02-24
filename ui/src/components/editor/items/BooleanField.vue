@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ JSON.stringify(modelValue.additional) }}
     <q-select v-model="modelValue.additional.widget"
               :options="widgetOptions"
               map-options

@@ -29,7 +29,7 @@
 import draggable from "vuedraggable";
 
 import items from "../items"
-import {shallowRef, defineAsyncComponent, reactive, toRefs} from 'vue'
+import {shallowRef, defineAsyncComponent, toRaw} from 'vue'
 
 function getComponent(schema) {
   if (schema.type && items[schema.type]) {
@@ -45,14 +45,15 @@ function cloneObject(obj) {
   if (obj == undefined || obj == null)
     return obj
   if (typeof obj == 'object') {
+    if (Array.isArray(obj)) {
+      let newArr = []
+      newArr.push(...obj)
+      return newArr
+    }
     let newObj = {}
     for (let key in obj)
       newObj[key] = cloneObject(obj[key])
     return newObj
-  } else if (typeof obj == "array") {
-    let newArr = []
-    newArr.push(...obj)
-    return newArr
   }
   return obj
 }
@@ -101,7 +102,7 @@ export default {
     clone(element) {
       return {
         component: shallowRef(element.component),
-        schema: cloneObject(element.schema)
+        schema: cloneObject(toRaw(element.schema))
       }
     }
   },

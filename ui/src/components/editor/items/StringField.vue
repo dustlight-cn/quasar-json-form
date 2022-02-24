@@ -6,14 +6,14 @@
               map-options
               emit-value
               filled :label="i18n.get('string.format')"/>
-    <q-input v-model="modelValue.schema.pattern"
+    <q-input :debounce="500" v-model="modelValue.schema.pattern"
              :rules="rulesPattern"
              filled :label="i18n.get('string.pattern')"/>
-    <q-input v-model.number="modelValue.schema.minLength"
+    <q-input :debounce="500" v-model.number="modelValue.schema.minLength"
              :rules="rulesMin"
              type="number"
              filled :label="i18n.get('string.minLength')"/>
-    <q-input v-model.number="modelValue.schema.maxLength"
+    <q-input :debounce="500" v-model.number="modelValue.schema.maxLength"
              :rules="rulesMax"
              type="number"
              filled :label="i18n.get('string.maxLength')"/>

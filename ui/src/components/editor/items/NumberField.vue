@@ -1,27 +1,27 @@
 <template>
   <div>
-    <q-input v-model.number="modelValue.schema.multipleOf"
+    <q-input :debounce="500" v-model.number="modelValue.schema.multipleOf"
              hint=" "
              type="number"
              :rules="multipleRules"
              filled :label="i18n.get('number.multipleOf')"/>
 
-    <q-input v-model.number="modelValue.schema.minimum"
+    <q-input :debounce="500" v-model.number="modelValue.schema.minimum"
              hint=" "
              type="number"
              filled :label="i18n.get('number.minimum')"/>
 
-    <q-input v-model.number="modelValue.schema.maximum"
+    <q-input :debounce="500" v-model.number="modelValue.schema.maximum"
              hint=" "
              type="number"
              filled :label="i18n.get('number.maximum')"/>
 
-    <q-input v-model.number="modelValue.schema.exclusiveMinimum"
+    <q-input :debounce="500" v-model.number="modelValue.schema.exclusiveMinimum"
              hint=" "
              type="number"
              filled :label="i18n.get('number.exclusiveMinimum')"/>
 
-    <q-input v-model.number="modelValue.schema.exclusiveMaximum"
+    <q-input :debounce="500" v-model.number="modelValue.schema.exclusiveMaximum"
              hint=" "
              type="number"
              filled :label="i18n.get('number.exclusiveMaximum')"/>

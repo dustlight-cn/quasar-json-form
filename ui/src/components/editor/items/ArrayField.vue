@@ -1,10 +1,10 @@
 <template>
   <div>
-    <q-input v-model.number="modelValue.schema.minItems"
+    <q-input :debounce="500" v-model.number="modelValue.schema.minItems"
              hint=" "
              type="number"
              filled :label="i18n.get('array.minItems')"/>
-    <q-input v-model.number="modelValue.schema.maxItems"
+    <q-input :debounce="500" v-model.number="modelValue.schema.maxItems"
              hint=" "
              type="number"
              filled :label="i18n.get('array.maxItems')"/>

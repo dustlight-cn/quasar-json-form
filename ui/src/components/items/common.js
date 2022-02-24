@@ -13,7 +13,9 @@ const props = {
 }
 
 function getDefaultValue(schema) {
-    if (schema == null || schema.type == null)
+    if (schema == null)
+        return null
+    if (schema.type == null)
         return null
     switch (schema.type) {
         case "string":

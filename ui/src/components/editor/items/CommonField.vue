@@ -1,14 +1,16 @@
 <template>
   <div>
-    <q-input v-if="!ignoreName" :rules="nameRules" v-model="modelValue.name" :label="i18n.get('name')" filled/>
-    <q-input hint=" " v-model="modelValue.schema.title" :label="i18n.get('title')" filled/>
-    <q-input hint=" " v-model="modelValue.schema.description" :label="i18n.get('description')" autogrow filled/>
-    <q-field hint=" " :label="i18n.get('type')" filled v-model="type">
+    <q-input :debounce="500" v-if="!ignoreName" :rules="nameRules" v-model="modelValue.name" :label="i18n.get('name')"
+             filled/>
+    <q-input :debounce="500" hint=" " v-model="modelValue.schema.title" :label="i18n.get('title')" filled/>
+    <q-input :debounce="500" hint=" " v-model="modelValue.schema.description" :label="i18n.get('description')" autogrow
+             filled/>
+    <q-field :debounce="500" hint=" " :label="i18n.get('type')" filled v-model="type">
       <template v-slot:control>
         {{ type }}
       </template>
     </q-field>
-    <q-input hint=" " :debounce="500" :rules="jsonRule" v-model="schemaConst" :label="i18n.get('const')"
+    <q-input :debounce="500" hint=" " :rules="jsonRule" v-model="schemaConst" :label="i18n.get('const')"
              autogrow filled/>
     <div class="text-right">
       <q-btn v-if="removable" icon="delete" round flat dense @click="(...args)=>this.$emit('onDelete',...args)"/>
