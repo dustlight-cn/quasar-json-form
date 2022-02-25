@@ -53,8 +53,8 @@ export default {
       })
     }
   },
-  mounted() {
-    if (this.modelValue.schema.required == null)
+  beforeMount() {
+    if (this.modelValue.schema.required == null || this.modelValue.schema.required == undefined)
       this.modelValue.schema.required = []
   }
 }

@@ -151,7 +151,7 @@ export default {
         this.list.forEach(ele => {
           ele.isArrayItem = false
           if (!ele.name) {
-            ele.name = (ele.schema.type || "enum") + "_" + new Date().getTime().toString(16)
+            ele.name = (ele.schema.type || "enum") + "_" + new Date().getTime().toString(32)
           }
           this.schema.properties[ele.name] = ele.schema
           childSet.delete(ele.name)

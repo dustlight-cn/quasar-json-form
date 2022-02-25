@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <json-form-editor ref="editor" :schema="client" :ui-schema="clientUi" :meta-schema="metaSchema">
+    <json-form-editor v-if="form" ref="editor" :name="form.name" :schema="form.schema" :ui-schema="form.additional.uiSchema" :meta-schema="null">
       <q-btn @click="getValue" label="Value" color="primary"/>
     </json-form-editor>
   </q-page>
@@ -17,7 +17,9 @@ export default {
       client: client,
       clientUi: clientUi,
       metaSchema: {},
-      miniState: false
+      miniState: false,
+      form: null,
+      schemaIgnore: null
     }
   },
   methods: {
@@ -36,6 +38,22 @@ export default {
     }
   },
   mounted() {
+    this.schemaIgnore = {
+      "$id": "this.$options.ext.basePath" + '/v1/schemas/',
+      "$schema": "this.$options.ext.basePath" + '/v1/schemas/form'
+    }
+    this.form = {
+      name: "form_" + new Date().getTime().toString(32),
+      schema: {
+        type: "object",
+        title: "",
+        description: "",
+        additionalProperties: false,
+      },
+      additional: {
+        uiSchema: {}
+      }
+    }
   }
 }
 
